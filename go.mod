@@ -1,4 +1,4 @@
-module githuv.com/pebbe/crowdsourcing
+module github.com/pebbe/crowdsourcing
 
 go 1.15
 
