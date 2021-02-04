@@ -1,0 +1,5 @@
+# the Go compiler
+GO = /path/to/go
+
+# so Go knows where to create the 'pkg' and '.cache' directories
+export HOME=/home/me

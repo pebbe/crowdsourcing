@@ -27,7 +27,7 @@ func dbOpen() bool {
 		return false
 	}
 
-	// TODO: verwijder verlopen login-pogingen
+	// TODO: remove transpired log-in attempts
 
 	return true
 }

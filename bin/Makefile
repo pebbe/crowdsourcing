@@ -1,3 +1,5 @@
 
+include Makefile.cfg
+
 index: *.go
-	go build -o index -v .
+	$(GO) build -o index -v .
