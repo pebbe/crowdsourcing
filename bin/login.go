@@ -17,6 +17,7 @@ func loginForm() {
 	if xx(err) {
 		return
 	}
+	headers()
 	fmt.Print(string(b))
 }
 
@@ -56,7 +57,7 @@ func loginRequest(req *http.Request) {
 		"Log in",
 		fmt.Sprintf(
 			"Go to this URL to log in: %sbin/?action=login&pw=%s",
-			cfg.Baseurl, url.QueryEscape(auth)))
+			baseUrl, url.QueryEscape(auth)))
 	if xx(err) {
 		return
 	}
@@ -70,7 +71,16 @@ func loginRequest(req *http.Request) {
 	if xx(err) {
 		return
 	}
+	headers()
 	xx(t.Execute(os.Stdout, email))
+}
+
+func login(req *http.Request) {
+	x(fmt.Errorf("Not implemented"))
+}
+
+func loggedin() bool {
+	return false
 }
 
 func rand16() string {

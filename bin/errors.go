@@ -35,6 +35,7 @@ func xerr(withLineno bool, err error, msg ...interface{}) bool {
 			b.WriteString(fmt.Sprintf(" %v", m))
 		}
 	}
+	headers()
 	fmt.Printf(`<html>
 <head>
 <title>Error</title>

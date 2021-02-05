@@ -1,3 +1,8 @@
+
+# which version
+TAGS = -tags devel
+#TAGS = -tags release
+
 # the Go compiler
 GO = /path/to/go
 

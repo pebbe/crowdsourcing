@@ -2,4 +2,4 @@
 include Makefile.cfg
 
 index: *.go
-	$(GO) build -o index -v .
+	$(GO) build $(TAGS) -o index -v .

@@ -1,0 +1,21 @@
+// +build release
+
+package main
+
+var (
+	// including trailing slash
+	baseUrl = "https://my.domain/my/crowdsourcing/"
+
+	// sender name and mail address
+	mailName = "My Crowdsourcing"
+	mailFrom = "me@my.domain"
+
+	// leave this empty if the mail server doesn't need log in
+	smtpUser = ""
+	smtpPass = ""
+
+	// mail server, including port number
+	smtpServ = "smtp.my.domain:25"
+
+	cookiePrefix = "mycrowd"
+)

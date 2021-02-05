@@ -6,21 +6,6 @@ import (
 )
 
 func main() {
-	fmt.Print(`Content-type: text/html; charset=utf-8
-Cache-Control: no-cache
-Pragma: no-cache
-
-`)
-
-	md, err := TomlDecodeFile("setup.toml", &cfg)
-	if xx(err) {
-		return
-	}
-	if un := md.Undecoded(); len(un) > 0 {
-		xx(fmt.Errorf("Error in setup.toml: unknown: %s", un))
-		return
-	}
-
 	req, err := cgi.Request()
 	if xx(err) {
 		return
@@ -36,10 +21,13 @@ Pragma: no-cache
 
 	action := req.FormValue("action")
 	if req.Method == "GET" {
-		// if action == "login": do logindone
-		// else if logged in: do userform
-		// else: do loginform
-		loginForm()
+		if action == "login" {
+			login(req)
+		} else if loggedin() {
+			userForm()
+		} else {
+			loginForm()
+		}
 	} else if req.Method == "POST" {
 		if action == "login" {
 			loginRequest(req)
