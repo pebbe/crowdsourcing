@@ -6,7 +6,8 @@ import (
 )
 
 func main() {
-	req, err := cgi.Request()
+	var err error
+	req, err = cgi.Request()
 	if xx(err) {
 		return
 	}
@@ -22,7 +23,7 @@ func main() {
 	action := req.FormValue("action")
 	if req.Method == "GET" {
 		if action == "login" {
-			login(req)
+			login()
 		} else if loggedin() {
 			userForm()
 		} else {
@@ -30,7 +31,7 @@ func main() {
 		}
 	} else if req.Method == "POST" {
 		if action == "login" {
-			loginRequest(req)
+			loginRequest()
 		}
 		// else if not logged in: do loginform
 		// else if action == "logout": do logout; do loginform

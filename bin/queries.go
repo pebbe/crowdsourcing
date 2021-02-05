@@ -2,8 +2,15 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 )
 
 func userForm() {
-	x(fmt.Errorf("Not implemented"))
+
+	b, err := ioutil.ReadFile("../templates/question.html")
+	if xx(err) {
+		return
+	}
+	headers()
+	fmt.Print(string(b))
 }

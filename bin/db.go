@@ -6,10 +6,6 @@ import (
 	"database/sql"
 )
 
-var (
-	db *sql.DB
-)
-
 func dbOpen() bool {
 	var err error
 

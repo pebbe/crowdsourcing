@@ -1,11 +1,12 @@
 package main
 
 import (
+	"github.com/dchest/authcookie"
+
 	"fmt"
 	"html/template"
 	"io/ioutil"
 	"math/rand"
-	"net/http"
 	"net/url"
 	"os"
 	"strings"
@@ -21,7 +22,7 @@ func loginForm() {
 	fmt.Print(string(b))
 }
 
-func loginRequest(req *http.Request) {
+func loginRequest() {
 	email := strings.TrimSpace(req.FormValue("email"))
 
 	if email == "" {
@@ -75,11 +76,48 @@ func loginRequest(req *http.Request) {
 	xx(t.Execute(os.Stdout, email))
 }
 
-func login(req *http.Request) {
-	x(fmt.Errorf("Not implemented"))
+func login() {
+
+	pw := strings.TrimSpace(req.FormValue("pw"))
+	if pw == "" {
+		pw = "none" // anders kan iemand zonder password inloggen
+	}
+
+	rows, err := db.Query(fmt.Sprintf("SELECT `email`,`sec` FROM `users` WHERE `pw` = %q", pw))
+	if x(err) {
+		return
+	}
+	if rows.Next() {
+		var mail, sec string
+		err := rows.Scan(&mail, &sec)
+		rows.Close()
+		if x(err) {
+			return
+		}
+		_, err = db.Exec(fmt.Sprintf("UPDATE `users` SET `pw` = '', `expires` = '' WHERE `email` = %q", mail))
+		if x(err) {
+			return
+		}
+		userAuth = true
+		userMail = mail
+		userSec = sec
+		userForm()
+	} else {
+		x(fmt.Errorf("Log in failed"))
+	}
 }
 
 func loggedin() bool {
+
+	if auth, err := req.Cookie(cookiePrefix + "-auth"); err == nil {
+		s := strings.SplitN(authcookie.Login(auth.Value, []byte(getRemote()+secret)), "|", 2)
+		if len(s) == 2 {
+			userMail = s[1]
+			userSec = s[0]
+			return true
+		}
+	}
+
 	return false
 }
 
