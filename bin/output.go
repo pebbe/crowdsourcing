@@ -14,6 +14,11 @@ Cache-Control: no-cache
 Pragma: no-cache
 `)
 
+	if doLogout {
+		fmt.Printf("Set-Cookie: %s-auth=; expires=Thu, 01 Jan 1970 00:00:00 GMT\n", cookiePrefix)
+		userAuth = false
+	}
+
 	if userAuth {
 		exp := time.Now().AddDate(0, 0, 14).UTC()
 		au := authcookie.New(userSec+"|"+userMail, exp, []byte(getRemote()+secret))

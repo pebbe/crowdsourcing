@@ -1,8 +1,10 @@
 package main
 
 import (
-	"fmt"
+	"html/template"
 	"io/ioutil"
+	"os"
+	"strings"
 )
 
 func userForm() {
@@ -11,6 +13,19 @@ func userForm() {
 	if xx(err) {
 		return
 	}
+
+	t, err := template.New("foo").Parse(string(b))
+	if xx(err) {
+		return
+	}
 	headers()
-	fmt.Print(string(b))
+	xx(t.Execute(os.Stdout, questionType{
+		UserName: getName(userMail),
+		Question: "Is dit een test?",
+		Image:    "../img/pic01.jpg",
+	}))
+}
+
+func getName(s string) string {
+	return s[:strings.Index(s, "@")]
 }

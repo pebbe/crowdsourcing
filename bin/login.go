@@ -107,18 +107,16 @@ func login() {
 	}
 }
 
-func loggedin() bool {
+func loggedin() {
 
 	if auth, err := req.Cookie(cookiePrefix + "-auth"); err == nil {
 		s := strings.SplitN(authcookie.Login(auth.Value, []byte(getRemote()+secret)), "|", 2)
 		if len(s) == 2 {
 			userMail = s[1]
 			userSec = s[0]
-			return true
+			userAuth = true
 		}
 	}
-
-	return false
 }
 
 func rand16() string {

@@ -20,11 +20,16 @@ func main() {
 	}
 	defer db.Close()
 
+	loggedin()
+
 	action := req.FormValue("action")
 	if req.Method == "GET" {
 		if action == "login" {
 			login()
-		} else if loggedin() {
+		} else if userAuth {
+			if action == "logout" {
+				doLogout = true
+			}
 			userForm()
 		} else {
 			loginForm()

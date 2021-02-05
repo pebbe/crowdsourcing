@@ -13,4 +13,6 @@ var (
 	db *sql.DB
 
 	req *http.Request
+
+	doLogout bool
 )

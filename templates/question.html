@@ -8,10 +8,26 @@
     <link rel="stylesheet" href="../style.css" type="text/css">
   </head>
   <body class="user">
-    <h1>Under development</h1>
-
+    <div id="header">
+      {{.UserName}} &middot;&middot; <a href="?action=logout">log out</a>
+    </div>
+    <div id="main">
     
-    <hr>
-    <a href="..">home</a>
+      <h1>Under development</h1>
+
+      <div id="question">
+	<p>
+	  <img src="{{.Image}}">
+	</p>
+	<p>
+	  {{.Question}}
+	</p>
+      </div>
+
+    </div>
+
+    <div id="footer">
+      <a href="..">home</a>
+    </div>
     </body>
 </html>
