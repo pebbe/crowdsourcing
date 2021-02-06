@@ -26,6 +26,15 @@ Pragma: no-cache
 	}
 
 	fmt.Println()
+
+	if doLocation {
+		fmt.Printf(`<head>
+<meta http-equiv="Refresh" content="0; URL=%sbin/">
+</head>
+`,
+			baseUrl)
+	}
+
 }
 
 func getRemote() string {

@@ -101,7 +101,8 @@ func login() {
 		userAuth = true
 		userMail = mail
 		userSec = sec
-		userForm()
+		doLocation = true
+		headers()
 	} else {
 		x(fmt.Errorf("Log in failed"))
 	}

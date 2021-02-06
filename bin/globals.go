@@ -14,5 +14,6 @@ var (
 
 	req *http.Request
 
-	doLogout bool
+	doLogout   bool
+	doLocation bool
 )

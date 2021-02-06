@@ -29,8 +29,11 @@ func main() {
 		} else if userAuth {
 			if action == "logout" {
 				doLogout = true
+				doLocation = true
+				headers()
+			} else {
+				userForm()
 			}
-			userForm()
 		} else {
 			loginForm()
 		}
