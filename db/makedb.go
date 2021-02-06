@@ -60,6 +60,7 @@ func main() {
 	// END CONFIG
 
 	_, err = db.Exec(`CREATE TABLE users (
+                        id      INTEGER PRIMARY KEY AUTOINCREMENT,
                         email   TEXT NOT NULL UNIQUE,
                         sec     TEXT,
                         pw      TEXT,

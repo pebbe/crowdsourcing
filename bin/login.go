@@ -109,13 +109,17 @@ func login() {
 }
 
 func loggedin() {
-
 	if auth, err := req.Cookie(cookiePrefix + "-auth"); err == nil {
 		s := strings.SplitN(authcookie.Login(auth.Value, []byte(getRemote()+secret)), "|", 2)
 		if len(s) == 2 {
 			userMail = s[1]
 			userSec = s[0]
-			userAuth = true
+			rows, err := db.Query(fmt.Sprintf("SELECT `id` FROM `users` WHERE `email` = %q AND `sec` = %q", userMail, userSec))
+			if err == nil {
+				for rows.Next() {
+					userAuth = true
+				}
+			}
 		}
 	}
 }
