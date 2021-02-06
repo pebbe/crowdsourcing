@@ -14,16 +14,7 @@ func dbOpen() bool {
 		return false
 	}
 
-	_, err = db.Exec(`CREATE TABLE IF NOT EXISTS users (
-	                email   varchar(128) NOT NULL UNIQUE,
-	                sec     char(16)     NOT NULL,
-	                pw      char(16)     NOT NULL,
-	                expires char(20)     NOT NULL);`)
-	if xx(err) {
-		return false
-	}
-
-	// TODO: remove transpired log-in attempts
+	// TODO: remove expired log-in attempts
 
 	return true
 }
