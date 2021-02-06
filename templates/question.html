@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html>
   <head>
     <title>Question</title>
@@ -9,20 +9,51 @@
   </head>
   <body class="user">
     <div id="header">
-      {{.UserName}} &middot;&middot; <a href="?action=logout">log out</a>
+      Done: {{.Done}} | Skipped: {{.Skipped}} | To do: {{.Todo}} | {{.UserName}} &middot;&middot; <a href="?action=logout">log out</a>
     </div>
     <div id="main">
-    
+
       <h1>Under development</h1>
 
       <div id="question">
-	<p>
-	  <img src="{{.Image}}">
-	</p>
-	<p>
-	  {{.Question}}
-	</p>
+        <p>
+          <img src="../img/{{.Image}}">
+        </p>
+        <p>
+          {{.Text}}
+        </p>
       </div>
+
+      <form action="."  method="post">
+        <input type="hidden" name="action" value="submit">
+        <input type="hidden" name="id" value="{{.ID}}">
+        <p>
+          What kind of animal is this?<br>
+          <input type="text" name="animal">
+        </p>
+        <p>
+          What is its primary colour?<br>
+          <input type="text" name="colour">
+        </p>
+        <p>
+          What size is it?<br>
+          <input type="radio" id="tiny" name="size" value="1">
+          <label for="tiny">Tiny</label><br>
+          <input type="radio" id="small" name="size" value="2">
+          <label for="small">Small</label><br>
+          <input type="radio" id="medium" name="size" value="3">
+          <label for="medium">Medium</label><br>
+          <input type="radio" id="large" name="size" value="4">
+          <label for="large">Large</label><br>
+          <input type="radio" id="huge" name="size" value="5">
+          <label for="huge">Huge</label><br>
+        </p>
+        <p>
+          <input type="checkbox" id="skip" name="skip" value="1">
+          <label for="skip">Skip this question, it's too difficult</label>
+        </p>
+        <input type="submit"> NOT IMPLEMENTED
+      </form>
 
     </div>
 

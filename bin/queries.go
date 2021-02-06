@@ -20,9 +20,13 @@ func userForm() {
 	}
 	headers()
 	xx(t.Execute(os.Stdout, questionType{
+		Done:     0,
+		Skipped:  0,
+		Todo:     3,
+		ID:       1,
 		UserName: getName(userMail),
-		Question: "Is dit een test?",
-		Image:    "../img/pic01.jpg",
+		Image:    "pic01.jpg",
+		Text:     "Mrs Jones",
 	}))
 }
 
