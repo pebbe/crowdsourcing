@@ -41,8 +41,17 @@ SELECT * FROM
 		if xx(err) {
 			return
 		}
+		t, err := template.New("foo").Parse(string(b))
+		if xx(err) {
+			return
+		}
 		headers()
-		fmt.Print(string(b))
+		xx(t.Execute(os.Stdout, questionType{
+			Done:     done,
+			Skipped:  skipped,
+			Todo:     total - done - skipped,
+			UserName: getName(gUserMail),
+		}))
 		return
 	}
 

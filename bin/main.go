@@ -44,8 +44,9 @@ func main() {
 			loginForm()
 		} else if action == "submit" {
 			submit()
+		} else if action == "unskip" {
+			unskip()
 		}
-		// else if action == "unskip": do resetskips, do userform
 		// else error
 	} else {
 		x(fmt.Errorf("Method not allowed: %s", gReq.Method))
