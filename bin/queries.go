@@ -19,10 +19,31 @@ SELECT * FROM
 		return
 	}
 	var total, done, skipped int
+	var ok bool
 	for rows.Next() {
 		if xx(rows.Scan(&total, &done, &skipped)) {
 			return
 		}
+		ok = true
+	}
+	if !ok {
+		xx(fmt.Errorf("Missing row"))
+	}
+
+	if done+skipped >= total {
+		var src string
+		if skipped == 0 {
+			src = "finished.html"
+		} else {
+			src = "skipped.html"
+		}
+		b, err := ioutil.ReadFile("../templates/" + src)
+		if xx(err) {
+			return
+		}
+		headers()
+		fmt.Print(string(b))
+		return
 	}
 
 	rows, err = gDB.Query(fmt.Sprintf(`
@@ -35,7 +56,6 @@ LIMIT 1`, gUserID))
 	}
 	var qid int
 	var text, image string
-	var ok bool
 	for rows.Next() {
 		if xx(rows.Scan(&qid, &text, &image)) {
 			return

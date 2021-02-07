@@ -40,10 +40,11 @@ func main() {
 	} else if gReq.Method == "POST" {
 		if action == "login" {
 			loginRequest()
+		} else if !gUserAuth {
+			loginForm()
+		} else if action == "submit" {
+			submit()
 		}
-		// else if not logged in: do loginform
-		// else if action == "logout": do logout; do loginform
-		// else if action == "submit": do process data, do userform
 		// else if action == "unskip": do resetskips, do userform
 		// else error
 	} else {
