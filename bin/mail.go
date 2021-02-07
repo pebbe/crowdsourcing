@@ -13,13 +13,13 @@ Subject: %s
 Content-type: text/plain; charset=UTF-8
 
 %s
-`, mailName, mailFrom, to, subject, body)
+`, sMailName, sMailFrom, to, subject, body)
 
-	if smtpUser != "" {
-		auth := smtp.PlainAuth("", smtpUser, smtpPass, strings.Split(smtpServ, ":")[0])
-		err = smtp.SendMail(smtpServ, auth, mailFrom, []string{to}, []byte(msg))
+	if sSmtpUser != "" {
+		auth := smtp.PlainAuth("", sSmtpUser, sSmtpPass, strings.Split(sSmtpServ, ":")[0])
+		err = smtp.SendMail(sSmtpServ, auth, sMailFrom, []string{to}, []byte(msg))
 	} else {
-		err = smtp.SendMail(smtpServ, nil, mailFrom, []string{to}, []byte(msg))
+		err = smtp.SendMail(sSmtpServ, nil, sMailFrom, []string{to}, []byte(msg))
 	}
 	return
 }

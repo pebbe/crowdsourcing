@@ -17,13 +17,35 @@ func main() {
 		log.Fatal(err)
 	}
 
-	// BEGIN CONFIG
-
+	// CONFIG: text
+	// CONFIG: image
 	_, err = db.Exec(`CREATE TABLE questions (
-                        id    INTEGER PRIMARY KEY,
+                        qid   INTEGER PRIMARY KEY,
                         text  TEXT,
                         image TEXT
                       );`)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	/*
+	   This view is not perfect. Questions with zero answers have also _cnt = 1.
+	   This view is used for ordering when selecting a new question. Questions that
+	   have fewer answers should be selected first.
+	*/
+	// CONFIG: text
+	// CONFIG: image
+	_, err = db.Exec(`CREATE VIEW qc AS
+                        SELECT qid, count(*) AS _cnt,
+                          text,
+                          image
+                        FROM questions
+                          LEFT JOIN ( SELECT * FROM answers WHERE skip = 0 )
+                          USING(qid)
+                        GROUP BY qid;`)
+	if err != nil {
+		log.Fatal(err)
+	}
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -45,7 +67,9 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		_, err = tx.Exec("INSERT INTO questions(id, text, image) VALUES (?, ?, ?);", record[0], record[1], record[2])
+		// CONFIG: text + record[1]
+		// CONFIG: image + record[2]
+		_, err = tx.Exec("INSERT INTO questions(qid, text, image) VALUES (?, ?, ?);", record[0], record[1], record[2])
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -55,12 +79,24 @@ func main() {
 		log.Fatal(err)
 	}
 
-	// TODO: answers
-
-	// END CONFIG
+	// CONFIG: animal
+	// CONFIG: colour
+	// CONFIG: size
+	_, err = db.Exec(`CREATE TABLE answers (
+                        aid     INTEGER PRIMARY KEY AUTOINCREMENT,
+                        qid     INTEGER,
+                        uid     INTEGER,
+                        skip    INTEGER DEFAULT 0,
+                        animal  TEXT DEFAULT "",
+                        colour  TEXT DEFAULT "",
+                        size    INTEGER DEFAULT 0
+                      );`)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	_, err = db.Exec(`CREATE TABLE users (
-                        id      INTEGER PRIMARY KEY AUTOINCREMENT,
+                        uid     INTEGER PRIMARY KEY AUTOINCREMENT,
                         email   TEXT NOT NULL UNIQUE,
                         sec     TEXT,
                         pw      TEXT,

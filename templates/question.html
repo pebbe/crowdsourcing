@@ -29,15 +29,15 @@
         <input type="hidden" name="id" value="{{.ID}}">
 	<hr>
         <p>
-          What kind of animal is this?<br>
+          What kind of animal is {{.Text}}?<br>
           <input type="text" name="animal">
         </p>
         <p>
-          What is its primary colour?<br>
+          What is {{.Text}}'s primary colour?<br>
           <input type="text" name="colour">
         </p>
         <p>
-          What size is it?<br>
+          What size is {{.Text}}?<br>
           <input type="radio" id="tiny" name="size" value="1">
           <label for="tiny">Tiny</label><br>
           <input type="radio" id="small" name="size" value="2">

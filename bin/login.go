@@ -23,14 +23,14 @@ func loginForm() {
 }
 
 func loginRequest() {
-	email := strings.TrimSpace(req.FormValue("email"))
+	email := strings.TrimSpace(gReq.FormValue("email"))
 
 	if email == "" {
 		x(fmt.Errorf("Missing e-mail address"))
 		return
 	}
 
-	tx, err := db.Begin()
+	tx, err := gDB.Begin()
 	if xx(err) {
 		return
 	}
@@ -58,7 +58,7 @@ func loginRequest() {
 		"Log in",
 		fmt.Sprintf(
 			"Go to this URL to log in: %sbin/?action=login&pw=%s",
-			baseUrl, url.QueryEscape(auth)))
+			sBaseUrl, url.QueryEscape(auth)))
 	if xx(err) {
 		return
 	}
@@ -78,30 +78,32 @@ func loginRequest() {
 
 func login() {
 
-	pw := strings.TrimSpace(req.FormValue("pw"))
+	pw := strings.TrimSpace(gReq.FormValue("pw"))
 	if pw == "" {
 		pw = "none" // anders kan iemand zonder password inloggen
 	}
 
-	rows, err := db.Query(fmt.Sprintf("SELECT `email`,`sec` FROM `users` WHERE `pw` = %q", pw))
+	rows, err := gDB.Query(fmt.Sprintf("SELECT `uid`,`email`,`sec` FROM `users` WHERE `pw` = %q", pw))
 	if x(err) {
 		return
 	}
 	if rows.Next() {
+		var id int
 		var mail, sec string
-		err := rows.Scan(&mail, &sec)
+		err := rows.Scan(&id, &mail, &sec)
 		rows.Close()
 		if x(err) {
 			return
 		}
-		_, err = db.Exec(fmt.Sprintf("UPDATE `users` SET `pw` = '', `expires` = '' WHERE `email` = %q", mail))
+		_, err = gDB.Exec(fmt.Sprintf("UPDATE `users` SET `pw` = '', `expires` = '' WHERE `email` = %q", mail))
 		if x(err) {
 			return
 		}
-		userAuth = true
-		userMail = mail
-		userSec = sec
-		doLocation = true
+		gUserAuth = true
+		gUserMail = mail
+		gUserSec = sec
+		gUserID = id
+		gLocation = true
 		headers()
 	} else {
 		x(fmt.Errorf("Log in failed"))
@@ -109,15 +111,16 @@ func login() {
 }
 
 func loggedin() {
-	if auth, err := req.Cookie(cookiePrefix + "-auth"); err == nil {
-		s := strings.SplitN(authcookie.Login(auth.Value, []byte(getRemote()+secret)), "|", 2)
+	if auth, err := gReq.Cookie(sCookiePrefix + "-auth"); err == nil {
+		s := strings.SplitN(authcookie.Login(auth.Value, []byte(getRemote()+sSecret)), "|", 2)
 		if len(s) == 2 {
-			userMail = s[1]
-			userSec = s[0]
-			rows, err := db.Query(fmt.Sprintf("SELECT `id` FROM `users` WHERE `email` = %q AND `sec` = %q", userMail, userSec))
+			gUserMail = s[1]
+			gUserSec = s[0]
+			rows, err := gDB.Query(fmt.Sprintf("SELECT `uid` FROM `users` WHERE `email` = %q AND `sec` = %q", gUserMail, gUserSec))
 			if err == nil {
 				for rows.Next() {
-					userAuth = true
+					rows.Scan(&gUserID)
+					gUserAuth = true
 				}
 			}
 		}

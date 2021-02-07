@@ -4,23 +4,23 @@ package main
 
 var (
 	// including trailing slash
-	baseUrl = "http://localhost/crowdsourcing/"
+	sBaseUrl = "http://localhost/crowdsourcing/"
 
 	// sender name and mail address
-	mailName = "My Crowdsourcing"
-	mailFrom = "me@my.domain"
+	sMailName = "My Crowdsourcing"
+	sMailFrom = "me@my.domain"
 
 	// leave this empty if the mail server doesn't need log in
-	smtpUser = ""
-	smtpPass = ""
+	sSmtpUser = ""
+	sSmtpPass = ""
 
 	// mail server, including port number
-	smtpServ = "smtp.my.domain:25"
+	sSmtpServ = "smtp.my.domain:25"
 
-	cookiePrefix = "mycrowd"
+	sCookiePrefix = "mycrowd"
 
-	secret = "change this into some random text"
+	sSecret = "change this into some random text"
 
-	useForwarded = false
-	useRemote    = true
+	sUseForwarded = false
+	sUseRemote    = true
 )

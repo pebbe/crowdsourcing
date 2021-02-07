@@ -6,14 +6,15 @@ import (
 )
 
 var (
-	userAuth bool
-	userMail string
-	userSec  string
+	gUserAuth bool
+	gUserMail string
+	gUserSec  string
+	gUserID   int
 
-	db *sql.DB
+	gDB *sql.DB
 
-	req *http.Request
+	gReq *http.Request
 
-	doLogout   bool
-	doLocation bool
+	gLogout   bool
+	gLocation bool
 )

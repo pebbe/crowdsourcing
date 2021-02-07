@@ -7,29 +7,29 @@ import (
 
 func main() {
 	var err error
-	req, err = cgi.Request()
+	gReq, err = cgi.Request()
 	if xx(err) {
 		return
 	}
-	if xx(req.ParseForm()) {
+	if xx(gReq.ParseForm()) {
 		return
 	}
 
 	if !dbOpen() {
 		return
 	}
-	defer db.Close()
+	defer gDB.Close()
 
 	loggedin()
 
-	action := req.FormValue("action")
-	if req.Method == "GET" {
+	action := gReq.FormValue("action")
+	if gReq.Method == "GET" {
 		if action == "login" {
 			login()
-		} else if userAuth {
+		} else if gUserAuth {
 			if action == "logout" {
-				doLogout = true
-				doLocation = true
+				gLogout = true
+				gLocation = true
 				headers()
 			} else {
 				userForm()
@@ -37,7 +37,7 @@ func main() {
 		} else {
 			loginForm()
 		}
-	} else if req.Method == "POST" {
+	} else if gReq.Method == "POST" {
 		if action == "login" {
 			loginRequest()
 		}
@@ -47,7 +47,7 @@ func main() {
 		// else if action == "unskip": do resetskips, do userform
 		// else error
 	} else {
-		x(fmt.Errorf("Method not allowed: %s", req.Method))
+		x(fmt.Errorf("Method not allowed: %s", gReq.Method))
 	}
 
 }

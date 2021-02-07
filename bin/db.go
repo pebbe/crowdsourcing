@@ -9,7 +9,7 @@ import (
 func dbOpen() bool {
 	var err error
 
-	db, err = sql.Open("sqlite3", "../db/data.sqlite")
+	gDB, err = sql.Open("sqlite3", "../db/data.sqlite")
 	if xx(err) {
 		return false
 	}
