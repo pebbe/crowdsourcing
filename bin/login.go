@@ -20,6 +20,9 @@ func loginForm() {
 	}
 	headers()
 	fmt.Print(string(b))
+
+	// TODO: remove expired log-in attempts
+
 }
 
 func loginRequest() {
@@ -116,11 +119,14 @@ func loggedin() {
 		if len(s) == 2 {
 			gUserMail = s[1]
 			gUserSec = s[0]
-			rows, err := gDB.Query(fmt.Sprintf("SELECT `uid` FROM `users` WHERE `email` = %q AND `sec` = %q", gUserMail, gUserSec))
+			rows, err := gDB.Query(fmt.Sprintf("SELECT `uid`,`sec` FROM `users` WHERE `email` = %q", gUserMail))
 			if err == nil {
 				for rows.Next() {
-					rows.Scan(&gUserID)
-					gUserAuth = true
+					var sec string
+					rows.Scan(&gUserID, &sec)
+					if sec == gUserSec {
+						gUserAuth = true
+					}
 				}
 			}
 		}

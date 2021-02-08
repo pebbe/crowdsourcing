@@ -28,32 +28,11 @@ func main() {
 		log.Fatal(err)
 	}
 
-	/*
-	   This view is not perfect. Questions with zero answers have also _cnt = 1.
-	   This view is used for ordering when selecting a new question. Questions that
-	   have fewer answers should be selected first.
-	*/
-	// CONFIG: text
-	// CONFIG: image
-	_, err = db.Exec(`CREATE VIEW qc AS
-                        SELECT qid, count(*) AS _cnt,
-                          text,
-                          image
-                        FROM questions
-                          LEFT JOIN ( SELECT * FROM answers WHERE skip = 0 )
-                          USING(qid)
-                        GROUP BY qid;`)
-	if err != nil {
-		log.Fatal(err)
-	}
-	if err != nil {
-		log.Fatal(err)
-	}
-
 	tx, err := db.Begin()
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	fp, err := os.Open("questions.csv")
 	if err != nil {
 		log.Fatal(err)
@@ -106,11 +85,19 @@ func main() {
 		log.Fatal(err)
 	}
 
+	for _, cmd := range []string{
+		"CREATE INDEX auid ON answers(uid);",
+		"CREATE INDEX askip ON answers(skip);",
+		"CREATE UNIQUE INDEX uemail ON users(email);"} {
+		_, err = db.Exec(cmd)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+
 	err = db.Close()
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	// TODO: indexen
 
 }

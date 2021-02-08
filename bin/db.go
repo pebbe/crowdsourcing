@@ -14,7 +14,5 @@ func dbOpen() bool {
 		return false
 	}
 
-	// TODO: remove expired log-in attempts
-
 	return true
 }

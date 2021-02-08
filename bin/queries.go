@@ -58,10 +58,11 @@ SELECT * FROM
 	// CONFIG: text
 	// CONFIG: image
 	rows, err = gDB.Query(fmt.Sprintf(`
-SELECT qid, text, image FROM qc
+SELECT qid, text, image FROM questions
 WHERE qid NOT IN ( SELECT qid FROM answers WHERE uid = %d )
-ORDER BY qc._cnt, qid
+ORDER BY RANDOM()
 LIMIT 1`, gUserID))
+
 	if xx(err) {
 		return
 	}
