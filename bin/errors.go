@@ -36,6 +36,7 @@ func xerr(withLineno bool, err error, msg ...interface{}) bool {
 		}
 	}
 	headers()
+	// TODO: 'back'-button
 	fmt.Printf(`<html>
 <head>
 <title>Error</title>

@@ -26,16 +26,21 @@ func submit() {
 		animal = strings.TrimSpace(gReq.FormValue("animal"))
 		colour = strings.TrimSpace(gReq.FormValue("colour"))
 		size, _ = strconv.Atoi(strings.TrimSpace(gReq.FormValue("size")))
+
+		// TODO: max string length
+
 		// CONFIG: animal
 		if animal == "" {
 			x(fmt.Errorf("Missing answer for animal"))
 			return
 		}
+
 		// CONFIG: colour
 		if colour == "" {
 			x(fmt.Errorf("Missing answer for colour"))
 			return
 		}
+
 		// CONFIG: size
 		if size < 1 || size > 5 {
 			x(fmt.Errorf("Missing choice for size"))

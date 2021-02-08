@@ -1,5 +1,7 @@
 package main
 
+// TODO: documentation
+
 var (
 	// including trailing slash
 	sBaseUrl = "https://my.domain/my/crowdsourcing/"

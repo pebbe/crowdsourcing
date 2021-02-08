@@ -5,6 +5,10 @@ import (
 	"net/http/cgi"
 )
 
+// TODO in all sources:
+//   x(error) vs xx(error)
+//   better file names and function names
+
 func main() {
 	var err error
 	gReq, err = cgi.Request()
