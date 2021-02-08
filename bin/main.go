@@ -24,7 +24,9 @@ func main() {
 
 	action := gReq.FormValue("action")
 	if gReq.Method == "GET" {
-		if action == "login" {
+		if action == "dl" {
+			download()
+		} else if action == "login" {
 			login()
 		} else if gUserAuth {
 			if action == "logout" {

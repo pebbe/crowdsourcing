@@ -1,5 +1,9 @@
 
-% : %.go
-	go build $<
+include ../bin/Makefile.cfg
 
-all: makedb
+% : %.go
+	$(GO) build $<
+
+data.sqlite: makedb questions.csv
+	rm -f data.sqlite
+	./makedb

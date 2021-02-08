@@ -34,7 +34,7 @@
           <!-- CONFIG: .Text -->
           What kind of animal is {{.Text}}?<br>
           <!-- CONFIG: animal -->
-          <input type="text" name="animal">
+          <input type="text" name="animal" id="first">
         </p>
         <p>
           <!-- CONFIG: .Text -->
@@ -70,5 +70,8 @@
     <div id="footer">
       <a href="..">home</a>
     </div>
-    </body>
+    <script type="text/javascript">
+      document.getElementById("first").focus();
+    </script>
+  </body>
 </html>
