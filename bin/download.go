@@ -16,7 +16,7 @@ func download() {
 SELECT qid, animal, colour, size
 FROM answers
 WHERE skip = 0
-ORDER by qid;`)
+ORDER by qid, animal, colour, size;`)
 
 	if err != nil {
 		fmt.Println(err)
