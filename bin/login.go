@@ -42,16 +42,22 @@ func loginRequest() {
 	sec := rand16()
 	expires := time.Now().Add(time.Hour).Format("2006-01-02T15:04:05")
 
-	_, err = tx.Exec(fmt.Sprintf("DELETE FROM `users` WHERE `email` = %q", email))
-	if xx(err) {
+	result, err := gDB.Exec(fmt.Sprintf("UPDATE `users` SET `sec` = %q, `pw` = %q, `expires` = %q WHERE `email` = %q", sec, auth, expires, email))
+	if x(err) {
 		tx.Rollback()
 		return
 	}
-
-	_, err = tx.Exec("INSERT INTO `users` (email, sec, pw, expires) VALUES (?,?,?,?);", email, sec, auth, expires)
-	if xx(err) {
+	n, err := result.RowsAffected()
+	if x(err) {
 		tx.Rollback()
 		return
+	}
+	if n == 0 {
+		_, err = tx.Exec("INSERT INTO `users` (email, sec, pw, expires) VALUES (?,?,?,?);", email, sec, auth, expires)
+		if xx(err) {
+			tx.Rollback()
+			return
+		}
 	}
 
 	xx(tx.Commit())
