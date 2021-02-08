@@ -9,21 +9,21 @@
   </head>
   <body class="user">
     <div id="header">
-      Done: {{.Done}} | Skipped: {{.Skipped}} | To do: {{.Todo}} | {{.UserName}} &middot;&middot; <a href="?action=logout">log out</a>
+      Done: {{.Done}} | Skipped: {{.Skipped}} | To do: {{.Todo}} | {{.UserName}} &middot;&middot; <a href="?action=logout">Log out</a>
     </div>
     <div id="main">
 
       <h1>Questionnaire</h1>
 
       <div id="question">
-      	You have skipped {{.Skipped}} item(s).
+        You have skipped {{.Skipped}} {{if eq .Skipped 1}} item {{else}} items {{end}}
         <p>
-	Would you like to try these items again?
+        Would you like to try {{if eq .Skipped 1}} this item {{else}} these items {{end}} again?
       </div>
 
       <form action="."  method="post">
         <input type="hidden" name="action" value="unskip">
-	<hr>
+        <hr>
         <p>
           <input type="radio" id="yes" name="unskip" value="yes">
           <label for="yes">Yes, try again</label><br>
@@ -37,7 +37,7 @@
     </div>
 
     <div id="footer">
-      <a href="..">home</a>
+      <a href="..">Home</a>
     </div>
     </body>
 </html>

@@ -9,7 +9,7 @@
   </head>
   <body class="user">
     <div id="header">
-      Done: {{.Done}} | Skipped: {{.Skipped}} | To do: {{.Todo}} | {{.UserName}} &middot;&middot; <a href="?action=logout">log out</a>
+      Done: {{.Done}} | Skipped: {{.Skipped}} | To do: {{.Todo}} | {{.UserName}} &middot;&middot; <a href="?action=logout">Log out</a>
     </div>
     <div id="main">
 
@@ -22,14 +22,14 @@
         </p>
         <p>
           <!-- CONFIG: .Text -->
-          {{.Text}}
+          This is {{.Text}}
         </p>
       </div>
 
       <form action="."  method="post">
         <input type="hidden" name="action" value="submit">
         <input type="hidden" name="qid" value="{{.Qid}}">
-	<hr>
+        <hr>
         <p>
           <!-- CONFIG: .Text -->
           What kind of animal is {{.Text}}?<br>
@@ -44,18 +44,18 @@
         </p>
         <p>
           <!-- CONFIG: .Text -->
-          What size is {{.Text}}?<br>
+          How big is {{.Text}}?<br>
           <!-- CONFIG: size + value -->
-          <input type="radio" id="tiny" name="size" value="1">
-          <label for="tiny">Tiny</label><br>
-          <input type="radio" id="small" name="size" value="2">
-          <label for="small">Small</label><br>
-          <input type="radio" id="medium" name="size" value="3">
-          <label for="medium">Medium</label><br>
-          <input type="radio" id="large" name="size" value="4">
-          <label for="large">Large</label><br>
           <input type="radio" id="huge" name="size" value="5">
           <label for="huge">Huge</label><br>
+          <input type="radio" id="large" name="size" value="4">
+          <label for="large">Large</label><br>
+          <input type="radio" id="medium" name="size" value="3">
+          <label for="medium">Medium</label><br>
+          <input type="radio" id="small" name="size" value="2">
+          <label for="small">Small</label><br>
+          <input type="radio" id="tiny" name="size" value="1">
+          <label for="tiny">Tiny</label><br>
         </p>
         <hr>
         <p>
@@ -68,7 +68,7 @@
     </div>
 
     <div id="footer">
-      <a href="..">home</a>
+      <a href="..">Home</a>
     </div>
     <script type="text/javascript">
       document.getElementById("first").focus();
