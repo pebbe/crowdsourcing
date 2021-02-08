@@ -17,27 +17,35 @@
 
       <div id="question">
         <p>
+          <!-- CONFIG: .Image -->
           <img src="../img/{{.Image}}">
         </p>
         <p>
+          <!-- CONFIG: .Text -->
           {{.Text}}
         </p>
       </div>
 
       <form action="."  method="post">
         <input type="hidden" name="action" value="submit">
-        <input type="hidden" name="id" value="{{.ID}}">
+        <input type="hidden" name="qid" value="{{.Qid}}">
 	<hr>
         <p>
+          <!-- CONFIG: .Text -->
           What kind of animal is {{.Text}}?<br>
+          <!-- CONFIG: animal -->
           <input type="text" name="animal">
         </p>
         <p>
+          <!-- CONFIG: .Text -->
           What is {{.Text}}'s primary colour?<br>
+          <!-- CONFIG: colour -->
           <input type="text" name="colour">
         </p>
         <p>
+          <!-- CONFIG: .Text -->
           What size is {{.Text}}?<br>
+          <!-- CONFIG: size + value -->
           <input type="radio" id="tiny" name="size" value="1">
           <label for="tiny">Tiny</label><br>
           <input type="radio" id="small" name="size" value="2">

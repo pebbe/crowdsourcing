@@ -1,17 +1,13 @@
 package main
 
-import ()
-
 type questionType struct {
 
-	// START OF CONFIG OPTIONS
-
+	// CONFIG: Image
+	// CONFIG: Text
 	Image string
 	Text  string
 
-	// END OF CONFIG OPTIONS
-
-	ID       int
+	Qid      int
 	UserName string
 	Done     int
 	Skipped  int

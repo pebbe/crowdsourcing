@@ -55,6 +55,8 @@ SELECT * FROM
 		return
 	}
 
+	// CONFIG: text
+	// CONFIG: image
 	rows, err = gDB.Query(fmt.Sprintf(`
 SELECT qid, text, image FROM qc
 WHERE qid NOT IN ( SELECT qid FROM answers WHERE uid = %d )
@@ -64,8 +66,12 @@ LIMIT 1`, gUserID))
 		return
 	}
 	var qid int
+	// CONFIG: text
+	// CONFIG: image
 	var text, image string
 	for rows.Next() {
+		// CONFIG: text
+		// CONFIG: image
 		if xx(rows.Scan(&qid, &text, &image)) {
 			return
 		}
@@ -89,10 +95,12 @@ LIMIT 1`, gUserID))
 		Done:     done,
 		Skipped:  skipped,
 		Todo:     total - done - skipped,
-		ID:       qid,
+		Qid:      qid,
 		UserName: getName(gUserMail),
-		Image:    image,
-		Text:     text,
+		// CONFIG: Text
+		// CONFIG: Image
+		Text:  text,
+		Image: image,
 	}))
 }
 

@@ -47,7 +47,7 @@ func main() {
 		} else if action == "unskip" {
 			unskip()
 		}
-		// else error
+		// TODO: else error
 	} else {
 		x(fmt.Errorf("Method not allowed: %s", gReq.Method))
 	}
