@@ -7,7 +7,8 @@ import (
 
 var (
 	gUserAuth bool
-	gUserMail string
+	gUserHash string
+	gUserName string
 	gUserSec  string
 	gUserID   int
 

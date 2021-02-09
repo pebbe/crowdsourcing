@@ -3,10 +3,12 @@ package main
 import (
 	"github.com/dchest/authcookie"
 
+	"crypto/sha256"
 	"fmt"
 	"html/template"
 	"io/ioutil"
 	"math/rand"
+	"net/smtp"
 	"net/url"
 	"os"
 	"strings"
@@ -33,16 +35,25 @@ func loginRequest() {
 		return
 	}
 
+	if !strings.Contains(email, "@") {
+		x(fmt.Errorf("Invalid e-mail address"))
+		return
+	}
+
 	tx, err := gDB.Begin()
 	if xx(err) {
 		return
 	}
 
+	ehash := getHash(email)
+	name := getName(email)
+
 	auth := rand16()
 	sec := rand16()
 	expires := time.Now().Add(time.Hour).Format("2006-01-02T15:04:05")
 
-	result, err := gDB.Exec(fmt.Sprintf("UPDATE `users` SET `sec` = %q, `pw` = %q, `expires` = %q WHERE `email` = %q", sec, auth, expires, email))
+	result, err := gDB.Exec(fmt.Sprintf("UPDATE `users` SET `sec` = %q, `pw` = %q, `expires` = %q WHERE `email` = %q",
+		sec, auth, expires, ehash))
 	if x(err) {
 		tx.Rollback()
 		return
@@ -53,7 +64,8 @@ func loginRequest() {
 		return
 	}
 	if n == 0 {
-		_, err = tx.Exec("INSERT INTO `users` (email, sec, pw, expires) VALUES (?,?,?,?);", email, sec, auth, expires)
+		_, err = tx.Exec("INSERT INTO `users` (email, name, sec, pw, expires) VALUES (?,?,?,?,?);",
+			ehash, name, sec, auth, expires)
 		if xx(err) {
 			tx.Rollback()
 			return
@@ -92,26 +104,21 @@ func login() {
 		pw = "none" // anders kan iemand zonder password inloggen
 	}
 
-	rows, err := gDB.Query(fmt.Sprintf("SELECT `uid`,`email`,`sec` FROM `users` WHERE `pw` = %q", pw))
+	rows, err := gDB.Query(fmt.Sprintf("SELECT `email`,`name`,`uid`,`sec` FROM `users` WHERE `pw` = %q", pw))
 	if x(err) {
 		return
 	}
 	if rows.Next() {
-		var id int
-		var mail, sec string
-		err := rows.Scan(&id, &mail, &sec)
+		err := rows.Scan(&gUserHash, &gUserName, &gUserID, &gUserSec)
 		rows.Close()
 		if x(err) {
 			return
 		}
-		_, err = gDB.Exec(fmt.Sprintf("UPDATE `users` SET `pw` = '', `expires` = '' WHERE `email` = %q", mail))
+		_, err = gDB.Exec(fmt.Sprintf("UPDATE `users` SET `pw` = '', `expires` = '' WHERE `email` = %q", gUserHash))
 		if x(err) {
 			return
 		}
 		gUserAuth = true
-		gUserMail = mail
-		gUserSec = sec
-		gUserID = id
 		gLocation = true
 		headers()
 	} else {
@@ -123,13 +130,13 @@ func loggedin() {
 	if auth, err := gReq.Cookie(sCookiePrefix + "-auth"); err == nil {
 		s := strings.SplitN(authcookie.Login(auth.Value, []byte(getRemote()+sSecret)), "|", 2)
 		if len(s) == 2 {
-			gUserMail = s[1]
 			gUserSec = s[0]
-			rows, err := gDB.Query(fmt.Sprintf("SELECT `uid`,`sec` FROM `users` WHERE `email` = %q", gUserMail))
+			gUserHash = s[1]
+			rows, err := gDB.Query(fmt.Sprintf("SELECT `name`,`uid`,`sec` FROM `users` WHERE `email` = %q", gUserHash))
 			if err == nil {
 				for rows.Next() {
 					var sec string
-					rows.Scan(&gUserID, &sec)
+					rows.Scan(&gUserName, &gUserID, &sec)
 					if sec == gUserSec {
 						gUserAuth = true
 					}
@@ -146,4 +153,30 @@ func rand16() string {
 		a[i] = byte(97 + rnd.Intn(26))
 	}
 	return string(a)
+}
+
+func sendmail(to, subject, body string) (err error) {
+	msg := fmt.Sprintf(`From: %q <%s>
+To: %s
+Subject: %s
+Content-type: text/plain; charset=UTF-8
+
+%s
+`, sMailName, sMailFrom, to, subject, body)
+
+	if sSmtpUser != "" {
+		auth := smtp.PlainAuth("", sSmtpUser, sSmtpPass, strings.Split(sSmtpServ, ":")[0])
+		err = smtp.SendMail(sSmtpServ, auth, sMailFrom, []string{to}, []byte(msg))
+	} else {
+		err = smtp.SendMail(sSmtpServ, nil, sMailFrom, []string{to}, []byte(msg))
+	}
+	return
+}
+
+func getName(s string) string {
+	return s[:strings.Index(s, "@")]
+}
+
+func getHash(s string) string {
+	return fmt.Sprintf("%x", sha256.Sum224([]byte(s)))
 }

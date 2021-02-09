@@ -5,7 +5,6 @@ import (
 	"html/template"
 	"io/ioutil"
 	"os"
-	"strings"
 )
 
 func userForm() {
@@ -50,7 +49,7 @@ SELECT * FROM
 			Done:     done,
 			Skipped:  skipped,
 			Todo:     total - done - skipped,
-			UserName: getName(gUserMail),
+			UserName: gUserName,
 		}))
 		return
 	}
@@ -97,14 +96,10 @@ LIMIT 1`, gUserID))
 		Skipped:  skipped,
 		Todo:     total - done - skipped,
 		Qid:      qid,
-		UserName: getName(gUserMail),
+		UserName: gUserName,
 		// CONFIG: Text
 		// CONFIG: Image
 		Text:  text,
 		Image: image,
 	}))
-}
-
-func getName(s string) string {
-	return s[:strings.Index(s, "@")]
 }

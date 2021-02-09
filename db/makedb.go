@@ -77,6 +77,7 @@ func main() {
 	_, err = db.Exec(`CREATE TABLE users (
                         uid     INTEGER PRIMARY KEY AUTOINCREMENT,
                         email   TEXT NOT NULL UNIQUE,
+                        name    TEXT,
                         sec     TEXT,
                         pw      TEXT,
                         expires TEXT

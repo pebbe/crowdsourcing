@@ -21,7 +21,7 @@ Pragma: no-cache
 
 	if gUserAuth {
 		exp := time.Now().AddDate(0, 0, 14).UTC()
-		au := authcookie.New(gUserSec+"|"+gUserMail, exp, []byte(getRemote()+sSecret))
+		au := authcookie.New(gUserSec+"|"+gUserHash, exp, []byte(getRemote()+sSecret))
 		fmt.Printf("Set-Cookie: %s-auth=%s; Expires=%s\n", sCookiePrefix, au, exp.Format(time.RFC1123))
 	}
 

@@ -54,7 +54,7 @@ SELECT * FROM
 			Done:     done,
 			Skipped:  skipped,
 			Todo:     total - done - skipped,
-			UserName: getName(gUserMail),
+			UserName: gUserName,
 		}))
 		return
 
