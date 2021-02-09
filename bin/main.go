@@ -33,13 +33,7 @@ func main() {
 		} else if action == "login" {
 			login()
 		} else if gUserAuth {
-			if action == "logout" {
-				gLogout = true
-				gLocation = true
-				headers()
-			} else {
-				userForm()
-			}
+			userForm()
 		} else {
 			loginForm()
 		}

@@ -24,6 +24,8 @@ func loginForm() {
 	fmt.Print(string(b))
 
 	// TODO: remove expired log-in attempts
+	// als gebruiker al antwoorden heeft gegeven, dan alleen pw resetten
+	// anders record verwijderen
 
 }
 
@@ -46,7 +48,6 @@ func loginRequest() {
 	}
 
 	ehash := getHash(email)
-	name := getName(email)
 
 	auth := rand16()
 	sec := rand16()
@@ -64,8 +65,8 @@ func loginRequest() {
 		return
 	}
 	if n == 0 {
-		_, err = tx.Exec("INSERT INTO `users` (email, name, sec, pw, expires) VALUES (?,?,?,?,?);",
-			ehash, name, sec, auth, expires)
+		_, err = tx.Exec("INSERT INTO `users` (email, sec, pw, expires) VALUES (?,?,?,?);",
+			ehash, sec, auth, expires)
 		if xx(err) {
 			tx.Rollback()
 			return
@@ -78,7 +79,7 @@ func loginRequest() {
 		email,
 		"Log in",
 		fmt.Sprintf(
-			"Go to this URL to log in: %sbin/?action=login&pw=%s",
+			"Go to this URL to log in: %sbin/?action=login&pw=%s\n\nNOTE: This URL will be valid for one hour\n",
 			sBaseUrl, url.QueryEscape(auth)))
 	if xx(err) {
 		return
@@ -104,17 +105,17 @@ func login() {
 		pw = "none" // anders kan iemand zonder password inloggen
 	}
 
-	rows, err := gDB.Query(fmt.Sprintf("SELECT `email`,`name`,`uid`,`sec` FROM `users` WHERE `pw` = %q", pw))
+	rows, err := gDB.Query(fmt.Sprintf("SELECT `email`,`uid`,`sec` FROM `users` WHERE `pw` = %q", pw))
 	if x(err) {
 		return
 	}
 	if rows.Next() {
-		err := rows.Scan(&gUserHash, &gUserName, &gUserID, &gUserSec)
+		err := rows.Scan(&gUserHash, &gUserID, &gUserSec)
 		rows.Close()
 		if x(err) {
 			return
 		}
-		_, err = gDB.Exec(fmt.Sprintf("UPDATE `users` SET `pw` = '', `expires` = '' WHERE `email` = %q", gUserHash))
+		_, err = gDB.Exec(fmt.Sprintf("UPDATE `users` SET `pw` = '', `expires` = '9999' WHERE `email` = %q", gUserHash))
 		if x(err) {
 			return
 		}
@@ -128,15 +129,15 @@ func login() {
 
 func loggedin() {
 	if auth, err := gReq.Cookie(sCookiePrefix + "-auth"); err == nil {
-		s := strings.SplitN(authcookie.Login(auth.Value, []byte(getRemote()+sSecret)), "|", 2)
+		s := strings.SplitN(authcookie.Login(auth.Value, []byte(sSecret)), "|", 2)
 		if len(s) == 2 {
 			gUserSec = s[0]
 			gUserHash = s[1]
-			rows, err := gDB.Query(fmt.Sprintf("SELECT `name`,`uid`,`sec` FROM `users` WHERE `email` = %q", gUserHash))
+			rows, err := gDB.Query(fmt.Sprintf("SELECT `uid`,`sec` FROM `users` WHERE `email` = %q", gUserHash))
 			if err == nil {
 				for rows.Next() {
 					var sec string
-					rows.Scan(&gUserName, &gUserID, &sec)
+					rows.Scan(&gUserID, &sec)
 					if sec == gUserSec {
 						gUserAuth = true
 					}
@@ -155,6 +156,10 @@ func rand16() string {
 	return string(a)
 }
 
+func getHash(s string) string {
+	return fmt.Sprintf("%x", sha256.Sum224([]byte(s)))
+}
+
 func sendmail(to, subject, body string) (err error) {
 	msg := fmt.Sprintf(`From: %q <%s>
 To: %s
@@ -171,12 +176,4 @@ Content-type: text/plain; charset=UTF-8
 		err = smtp.SendMail(sSmtpServ, nil, sMailFrom, []string{to}, []byte(msg))
 	}
 	return
-}
-
-func getName(s string) string {
-	return s[:strings.Index(s, "@")]
-}
-
-func getHash(s string) string {
-	return fmt.Sprintf("%x", sha256.Sum224([]byte(s)))
 }

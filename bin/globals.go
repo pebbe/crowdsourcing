@@ -8,7 +8,6 @@ import (
 var (
 	gUserAuth bool
 	gUserHash string
-	gUserName string
 	gUserSec  string
 	gUserID   int
 
@@ -16,6 +15,5 @@ var (
 
 	gReq *http.Request
 
-	gLogout   bool
 	gLocation bool
 )

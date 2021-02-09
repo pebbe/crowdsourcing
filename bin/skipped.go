@@ -51,10 +51,9 @@ SELECT * FROM
 		}
 		headers()
 		xx(t.Execute(os.Stdout, questionType{
-			Done:     done,
-			Skipped:  skipped,
-			Todo:     total - done - skipped,
-			UserName: gUserName,
+			Done:    done,
+			Skipped: skipped,
+			Todo:    total - done - skipped,
 		}))
 		return
 

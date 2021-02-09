@@ -46,10 +46,9 @@ SELECT * FROM
 		}
 		headers()
 		xx(t.Execute(os.Stdout, questionType{
-			Done:     done,
-			Skipped:  skipped,
-			Todo:     total - done - skipped,
-			UserName: gUserName,
+			Done:    done,
+			Skipped: skipped,
+			Todo:    total - done - skipped,
 		}))
 		return
 	}
@@ -92,11 +91,10 @@ LIMIT 1`, gUserID))
 	}
 	headers()
 	xx(t.Execute(os.Stdout, questionType{
-		Done:     done,
-		Skipped:  skipped,
-		Todo:     total - done - skipped,
-		Qid:      qid,
-		UserName: gUserName,
+		Done:    done,
+		Skipped: skipped,
+		Todo:    total - done - skipped,
+		Qid:     qid,
 		// CONFIG: Text
 		// CONFIG: Image
 		Text:  text,

@@ -7,9 +7,8 @@ type questionType struct {
 	Image string
 	Text  string
 
-	Qid      int
-	UserName string
-	Done     int
-	Skipped  int
-	Todo     int
+	Qid     int
+	Done    int
+	Skipped int
+	Todo    int
 }

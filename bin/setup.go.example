@@ -20,7 +20,4 @@ var (
 	sCookiePrefix = "mycrowd"
 
 	sSecret = "change this into some random text"
-
-	sUseForwarded = false
-	sUseRemote    = true
 )
