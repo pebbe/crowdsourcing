@@ -34,13 +34,13 @@
           <!-- CONFIG: .Text -->
           What kind of animal is {{.Text}}?<br>
           <!-- CONFIG: animal -->
-          <input type="text" name="animal" id="first">
+          <input type="text" name="animal" maxlength="100" autofocus>
         </p>
         <p>
           <!-- CONFIG: .Text -->
           What is {{.Text}}'s primary colour?<br>
           <!-- CONFIG: colour -->
-          <input type="text" name="colour">
+          <input type="text" name="colour" maxlength="100" >
         </p>
         <p>
           <!-- CONFIG: .Text -->
@@ -70,8 +70,5 @@
     <div id="footer">
       <a href="..">Home</a>
     </div>
-    <script type="text/javascript">
-      document.getElementById("first").focus();
-    </script>
   </body>
 </html>
