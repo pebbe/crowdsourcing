@@ -56,7 +56,11 @@ func question() {
 
 	// CONFIG: image name tagline
 	rows, err = gDB.Query(fmt.Sprintf(`
-			SELECT qid, image, name, tagline FROM questions
+			SELECT qid,
+				image,
+				name,
+				tagline
+			FROM questions
 			WHERE qid NOT IN ( SELECT qid FROM answers WHERE uid = %d )
 			ORDER BY RANDOM()
 			LIMIT 1`,

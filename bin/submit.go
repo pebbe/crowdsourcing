@@ -23,7 +23,7 @@ func submit() {
 		skip = 1
 	} else {
 
-		// CONFIG: animal colour size
+		// BEGIN CONFIG: animal colour size
 
 		animal = strings.TrimSpace(gReq.FormValue("animal"))
 		colour = strings.TrimSpace(gReq.FormValue("colour"))
@@ -51,6 +51,9 @@ func submit() {
 			x(fmt.Errorf("Missing choice for size"))
 			return
 		}
+
+		// END CONFIG: animal colour size
+
 	}
 
 	tx, err := gDB.Begin()
@@ -66,7 +69,7 @@ func submit() {
 	}
 
 	// CONFIG: animal colour size
-	// NOTE: number of question marks must match number of fields and arguments
+	// NOTE: the number of question marks must match the number of fields and arguments
 	_, err = tx.Exec("INSERT INTO answers(qid, uid, skip, animal, colour, size) VALUES (?, ?, ?, ?, ?, ?);",
 		qid,
 		gUserID,

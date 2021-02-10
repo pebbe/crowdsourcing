@@ -17,8 +17,8 @@
 
       <div id="question">
         <p>
-          <!-- CONFIG: .Image -->
-          <img src="../img/{{.Image}}">
+          <!-- CONFIG: .Image .Name -->
+          <img src="../img/{{.Image}}" alt="{{.Name}}">
         </p>
         <p>
           <!-- CONFIG: .Name -->
@@ -26,11 +26,11 @@
         </p>
         <p>
           <!-- CONFIG: .Tagline -->
-          “ <em>{{.Tagline}}<em> ”
+          “ <em>{{.Tagline}}</em> ”
         </p>
       </div>
 
-      <form action="."  method="post">
+      <form action="."  method="post" accept-charset="utf-8">
         <input type="hidden" name="action" value="submit">
         <input type="hidden" name="qid" value="{{.Qid}}">
         <hr>
@@ -38,6 +38,7 @@
           <!-- CONFIG: .Name -->
           What kind of animal is {{.Name}}?<br>
           <!-- CONFIG: animal -->
+          <!-- The first input element as the autofocus attribute -->
           <input type="text" name="animal" maxlength="100" autofocus>
         </p>
         <p>
