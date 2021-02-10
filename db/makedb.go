@@ -54,6 +54,7 @@ func main() {
 	}
 	r := csv.NewReader(fp)
 	r.Comment = '#'
+	r.TrimLeadingSpace = true
 	for {
 		record, err := r.Read()
 		if err == io.EOF {
