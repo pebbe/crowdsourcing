@@ -21,8 +21,12 @@
           <img src="../img/{{.Image}}">
         </p>
         <p>
-          <!-- CONFIG: .Text -->
-          This is {{.Text}}
+          <!-- CONFIG: .Name -->
+          This is {{.Name}}
+        </p>
+        <p>
+          <!-- CONFIG: .Tagline -->
+          {{.Tagline}}
         </p>
       </div>
 
@@ -31,20 +35,20 @@
         <input type="hidden" name="qid" value="{{.Qid}}">
         <hr>
         <p>
-          <!-- CONFIG: .Text -->
-          What kind of animal is {{.Text}}?<br>
+          <!-- CONFIG: .Name -->
+          What kind of animal is {{.Name}}?<br>
           <!-- CONFIG: animal -->
           <input type="text" name="animal" maxlength="100" autofocus>
         </p>
         <p>
-          <!-- CONFIG: .Text -->
-          What is {{.Text}}'s primary colour?<br>
+          <!-- CONFIG: .Name -->
+          What is {{.Name}}'s primary colour?<br>
           <!-- CONFIG: colour -->
           <input type="text" name="colour" maxlength="100" >
         </p>
         <p>
-          <!-- CONFIG: .Text -->
-          How big is {{.Text}}?<br>
+          <!-- CONFIG: .Name -->
+          How big is {{.Name}}?<br>
           <!-- CONFIG: size + value -->
           <input type="radio" id="huge" name="size" value="5">
           <label for="huge">Huge</label><br>

@@ -7,11 +7,13 @@ import (
 )
 
 func submit() {
-	// CONFIG: size
-	var qid, skip, size int
-	// CONFIG: animal
-	// CONFIG: colour
-	var animal, colour string
+
+	// CONFIG: animal colour size
+	var animal string
+	var colour string
+	var size int
+
+	var qid, skip int
 	var err error
 	qid, err = strconv.Atoi(strings.TrimSpace(gReq.FormValue("qid")))
 	if xx(err) {
@@ -20,28 +22,31 @@ func submit() {
 	if strings.TrimSpace(gReq.FormValue("skip")) != "" {
 		skip = 1
 	} else {
-		// CONFIG: animal
-		// CONFIG: colour
-		// CONFIG: size
+
+		// CONFIG: animal colour size
+
 		animal = strings.TrimSpace(gReq.FormValue("animal"))
 		colour = strings.TrimSpace(gReq.FormValue("colour"))
 		size, _ = strconv.Atoi(strings.TrimSpace(gReq.FormValue("size")))
 
-		// TODO: max string length
+		if len(animal) > 100 {
+			animal = animal[:100]
+		}
 
-		// CONFIG: animal
+		if len(colour) > 100 {
+			colour = colour[:100]
+		}
+
 		if animal == "" {
 			x(fmt.Errorf("Missing answer for animal"))
 			return
 		}
 
-		// CONFIG: colour
 		if colour == "" {
 			x(fmt.Errorf("Missing answer for colour"))
 			return
 		}
 
-		// CONFIG: size
 		if size < 1 || size > 5 {
 			x(fmt.Errorf("Missing choice for size"))
 			return
@@ -60,16 +65,13 @@ func submit() {
 
 	}
 
-	// CONFIG: animal
-	// CONFIG: colour
-	// CONFIG: size
+	// CONFIG: animal colour size
+	// NOTE: number of question marks must match number of fields and arguments
 	_, err = tx.Exec("INSERT INTO answers(qid, uid, skip, animal, colour, size) VALUES (?, ?, ?, ?, ?, ?);",
 		qid,
 		gUserID,
 		skip,
-		// CONFIG: animal
-		// CONFIG: colour
-		// CONFIG: size
+		// CONFIG: animal colour size
 		animal,
 		colour,
 		size)
@@ -81,6 +83,6 @@ func submit() {
 
 	tx.Commit()
 
-	userForm()
+	question()
 
 }

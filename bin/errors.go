@@ -7,12 +7,12 @@ import (
 	"runtime"
 )
 
-// zonder lineno
+// print plain error
 func x(err error, msg ...interface{}) bool {
 	return xerr(false, err, msg...)
 }
 
-// met lineno
+// print error with line number
 func xx(err error, msg ...interface{}) bool {
 	return xerr(true, err, msg...)
 }

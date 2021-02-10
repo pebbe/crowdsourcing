@@ -1,6 +1,9 @@
 package main
 
 import (
+	_ "github.com/mattn/go-sqlite3"
+
+	"database/sql"
 	"fmt"
 	"net/http/cgi"
 )
@@ -19,7 +22,8 @@ func main() {
 		return
 	}
 
-	if !dbOpen() {
+	gDB, err = sql.Open("sqlite3", "../db/data.sqlite")
+	if xx(err) {
 		return
 	}
 	defer gDB.Close()
@@ -33,7 +37,7 @@ func main() {
 		} else if action == "login" {
 			login()
 		} else if gUserAuth {
-			userForm()
+			question()
 		} else {
 			loginForm()
 		}
@@ -51,5 +55,4 @@ func main() {
 	} else {
 		x(fmt.Errorf("Method not allowed: %s", gReq.Method))
 	}
-
 }

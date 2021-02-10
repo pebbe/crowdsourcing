@@ -14,6 +14,4 @@ var (
 	gDB *sql.DB
 
 	gReq *http.Request
-
-	gLocation bool
 )

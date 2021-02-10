@@ -11,10 +11,12 @@ import (
 func unskip() {
 
 	rows, err := gDB.Query(fmt.Sprintf(`
-SELECT * FROM
-( SELECT COUNT(*) FROM questions),
-( SELECT COUNT(*) FROM answers WHERE uid = %d AND skip = 0),
-( SELECT COUNT(*) FROM answers WHERE uid = %d AND skip > 0)`, gUserID, gUserID))
+			SELECT * FROM
+			( SELECT COUNT(*) FROM questions),
+			( SELECT COUNT(*) FROM answers WHERE uid = %d AND skip = 0),
+			( SELECT COUNT(*) FROM answers WHERE uid = %d AND skip > 0)`,
+		gUserID,
+		gUserID))
 	if xx(err) {
 		return
 	}
@@ -36,7 +38,7 @@ SELECT * FROM
 		if xx(err) {
 			return
 		}
-		userForm()
+		question()
 		return
 	}
 
@@ -59,5 +61,5 @@ SELECT * FROM
 
 	}
 
-	userForm()
+	question()
 }

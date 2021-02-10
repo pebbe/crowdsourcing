@@ -80,7 +80,7 @@ func loginRequest() {
 		"Log in",
 		fmt.Sprintf(
 			"Go to this URL to log in: %sbin/?action=login&pw=%s\n\nNOTE: This URL will be valid for one hour\n",
-			sBaseUrl, url.QueryEscape(auth)))
+			cBaseUrl, url.QueryEscape(auth)))
 	if xx(err) {
 		return
 	}
@@ -120,16 +120,20 @@ func login() {
 			return
 		}
 		gUserAuth = true
-		gLocation = true
 		headers()
+		fmt.Printf(`<head>
+<meta http-equiv="Refresh" content="0; URL=%sbin/">
+</head>
+`,
+			cBaseUrl)
 	} else {
 		x(fmt.Errorf("Log in failed"))
 	}
 }
 
 func loggedin() {
-	if auth, err := gReq.Cookie(sCookiePrefix + "-auth"); err == nil {
-		s := strings.SplitN(authcookie.Login(auth.Value, []byte(sSecret)), "|", 2)
+	if auth, err := gReq.Cookie(cCookiePrefix + "-auth"); err == nil {
+		s := strings.SplitN(authcookie.Login(auth.Value, []byte(cSecret)), "|", 2)
 		if len(s) == 2 {
 			gUserSec = s[0]
 			gUserHash = s[1]
@@ -167,13 +171,13 @@ Subject: %s
 Content-type: text/plain; charset=UTF-8
 
 %s
-`, sMailName, sMailFrom, to, subject, body)
+`, cMailName, cMailFrom, to, subject, body)
 
-	if sSmtpUser != "" {
-		auth := smtp.PlainAuth("", sSmtpUser, sSmtpPass, strings.Split(sSmtpServ, ":")[0])
-		err = smtp.SendMail(sSmtpServ, auth, sMailFrom, []string{to}, []byte(msg))
+	if cSmtpUser != "" {
+		auth := smtp.PlainAuth("", cSmtpUser, cSmtpPass, strings.Split(cSmtpServ, ":")[0])
+		err = smtp.SendMail(cSmtpServ, auth, cMailFrom, []string{to}, []byte(msg))
 	} else {
-		err = smtp.SendMail(sSmtpServ, nil, sMailFrom, []string{to}, []byte(msg))
+		err = smtp.SendMail(cSmtpServ, nil, cMailFrom, []string{to}, []byte(msg))
 	}
 	return
 }
