@@ -53,6 +53,7 @@ func main() {
 		log.Fatal(err)
 	}
 	r := csv.NewReader(fp)
+	r.Comment = '#'
 	for {
 		record, err := r.Read()
 		if err == io.EOF {
