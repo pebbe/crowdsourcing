@@ -5,3 +5,4 @@ GO = /path/to/go
 # so Go knows where to create the 'pkg' and '.cache' directories
 # this is needed when you compile via the web server
 export HOME=/home/me
+export GO111MODULE=on
