@@ -30,7 +30,10 @@ func download() {
 
 	w := csv.NewWriter(os.Stdout)
 
+	seen := false
 	for rows.Next() {
+		seen = true
+
 		// CONFIG: animal colour size
 		var animal string
 		var colour string
@@ -71,4 +74,7 @@ func download() {
 		fmt.Println(err)
 	}
 
+	if !seen {
+		fmt.Println("Nothing submitted yet")
+	}
 }

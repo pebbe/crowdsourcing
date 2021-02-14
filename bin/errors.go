@@ -46,11 +46,15 @@ func xerr(withLineno bool, err error, msg ...interface{}) bool {
 <link rel="stylesheet" href="../style.css" type="text/css">
 </head>
 <body class="error">
+<div id="header">
+&nbsp;
+</div>
+<div id="main">
 <h1>Error</h2>
-<div>
 %s
 </div>
-<a href=".">continue</a>
+<div id="footer">
+<a href=".">Continue</a>
 </body>
 </html>
 `, html.EscapeString(b.String()))
