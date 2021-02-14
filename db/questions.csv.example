@@ -4,6 +4,7 @@
 # - image:   Name of file with picture of animal, CONFIG
 # - name:    Name of animal, any text allowed, CONFIG
 # - tagline: What the animal has to say, MUST BE valid HTML, CONFIG
+# Do NOT put spaces before a comma
 1, pic01.jpg, Mrs Jones,             <b>Don't touch</b> my eggs!
 2, pic02.jpg, Ms Smith,              What ya doin'?
 3, pic03.jpg, "Ms ""Mighty"" Brown", I <b>do not</b> give chocolate milk
