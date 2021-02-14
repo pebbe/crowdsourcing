@@ -10,8 +10,6 @@ import (
 
 // TODO in all sources:
 //   x(error) vs xx(error)
-//   better file names and function names
-//   CONFIG: +question or +answer
 
 func main() {
 

@@ -9,7 +9,7 @@ import (
 func download() {
 	fmt.Print("Content-type: text/plain; charset=utf-8\n\n")
 
-	// CONFIG: animal colour size
+	// CONFIG answer: animal colour size
 	rows, err := gDB.Query(`
 			SELECT qid,
 				animal,
@@ -34,14 +34,14 @@ func download() {
 	for rows.Next() {
 		seen = true
 
-		// CONFIG: animal colour size
+		// CONFIG answer: animal colour size
 		var animal string
 		var colour string
 		var size int
 
 		var qid int
 
-		// CONFIG: animal colour size
+		// CONFIG answer: animal colour size
 		err := rows.Scan(&qid, &animal, &colour, &size)
 		if err != nil {
 			rows.Close()
@@ -51,7 +51,7 @@ func download() {
 
 		err = w.Write([]string{
 			fmt.Sprint(qid), // convert int to string
-			// CONFIG: animal colour size
+			// CONFIG answer: animal colour size
 			animal,
 			colour,
 			fmt.Sprint(size), // convert int to string -- yes, that comma is needed

@@ -8,7 +8,7 @@ import (
 
 func submit() {
 
-	// CONFIG: animal colour size
+	// CONFIG answer: animal colour size
 	var animal string
 	var colour string
 	var size int
@@ -23,7 +23,7 @@ func submit() {
 		skip = 1
 	} else {
 
-		// BEGIN CONFIG: animal colour size
+		// BEGIN CONFIG answer: animal colour size
 
 		animal = strings.TrimSpace(gReq.FormValue("animal"))
 		colour = strings.TrimSpace(gReq.FormValue("colour"))
@@ -52,7 +52,7 @@ func submit() {
 			return
 		}
 
-		// END CONFIG: animal colour size
+		// END CONFIG answer: animal colour size
 
 	}
 
@@ -68,13 +68,13 @@ func submit() {
 
 	}
 
-	// CONFIG: animal colour size
+	// CONFIG answer: animal colour size
 	// NOTE: the number of question marks must match the number of fields and arguments
 	_, err = tx.Exec("INSERT INTO answers(qid, uid, skip, animal, colour, size) VALUES (?, ?, ?, ?, ?, ?);",
 		qid,
 		gUserID,
 		skip,
-		// CONFIG: animal colour size
+		// CONFIG answer: animal colour size
 		animal,
 		colour,
 		size)

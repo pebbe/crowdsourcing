@@ -1,7 +1,7 @@
 ## Configure your own survey
 
 Once you have the demo project installed and working (see
-[INSTALL.md](INSTALL.md)), you can configure the project for you own
+[INSTALL.md](INSTALL.md)), you can configure the project for your own
 needs.
 
 There are three things to consider:
@@ -15,26 +15,25 @@ There are three things to consider:
 
 This involves items 1 and 2 from the list above.
 
-All data, for questions and answers is stored in a SQLite database in
+All data, for questions and answers, is stored in a SQLite database in
 the `db` subdirectory.
 
 Go to the `db` subdirectory.
 
-Put all your question data in the
-*comma-separated values* file `questions.csv`
-([csv](https://golang.org/pkg/encoding/csv/)).
-The first field of each record must be a unique integer. Following the
+Put all your question data in the *comma-separated values* file
+`questions.csv` ([csv](https://golang.org/pkg/encoding/csv/)). The
+first field of each record must be a unique integer. Following the
 first field are one or more fields that are used for parts of the page
 of the questionnaire. The example uses three fields, `image`, `name`,
 and `tagline`, which are all strings.
 
 You need to edit the file `makedb.go` that creates the database and
-stores all the question data into the database. All parts of the file you need to
-modify are marked with the comment `CONFIG`. The example uses the
-question fields `image`, `name`, and `tagline`, and the answer fields
-`animal`, `colour`, and `size`. All field are of type `TEXT` in SQLite, except
-`size` which is of type `INTEGER`. Change those fields, but don't change
-any of the other fields.
+stores all the question data into the database. All parts of the file
+you need to modify are marked with the comment `CONFIG`. The example
+uses the question fields `image`, `name`, and `tagline`, and the
+answer fields `animal`, `colour`, and `size`. All field are of type
+`TEXT` in SQLite, except `size` which is of type `INTEGER`. Change
+those fields, but don't change any of the other fields.
 
 When you're done, run the command `make` on the command line. This
 creates the program `makedb` and creates the SQLite database.
@@ -58,20 +57,20 @@ a [template](https://golang.org/pkg/html/template/) file, like all
 other files in this directory.
 
 There are question parameters. In the example these are `image`,
-`name`, and `tagline`, and are used with a leading dot and an uppercase
-first letter as `{{.Image}}`, `{{.Name}}`, and `{{.Tagline}}`. You
-need to change these.
+`name`, and `tagline`, and are used with a leading dot and an
+uppercase first letter as `{{.Image}}`, `{{.Name}}`, and
+`{{.Tagline}}`. You need to change these.
 
 All things you need to change are marked with a `CONFIG` comment.
 
 There are form fields for the answer. Some are required, inputs of
-type `hidden`. You need to change only the other form fields. The example
-uses `animal`, `colour`, and `size`.
+type `hidden`. You need to change only the other form fields. The
+example uses `animal`, `colour`, and `size`.
 
 Of course, there is much more you can change to fill your needs. You
 can present images, maps, sound, whatever you need, or just text. You
-can add javascript to perform all sorts of actions. As long as the page
-sends the results back as a POST request like in the example.
+can add javascript to perform all sorts of actions. As long as the
+page sends the results back as a POST request like in the example.
 
 Make sure `question.html` is correct html, or the program may not be
 able to process it. Use some sort of html validator.
@@ -108,7 +107,7 @@ inserted into the html page. So the data can have `<b>` and `</b>` and
 it will appear as bold text. Make sure any special character that is
 not meant as part of mark-up is properly escaped, like `<` as `&lt;`.
 
-If you do not use the `template.HTML` type at  all, you need to remove
+If you do not use the `template.HTML` type at all, you need to remove
 the `"html/template"` import at the top of the file.
 
 ### `download.go`
@@ -146,13 +145,13 @@ If you made a syntax error, or misspelled a variable name, you will
 get an error message with filename and line number.
 
 If the program compiled without an error, test it. Visit your project
-with a browser. Try submitting a page with invalid data. You
-should see an appropriate error message.
+with a browser. Try submitting a page with invalid data. You should
+see an appropriate error message.
 
 If you get an error messages that includes a file name and a line
-number, something went wrong that should not go wrong, and you need to fix
-it. This could happen for example, when you misspell a variable in a
-template file.
+number, something went wrong that should not go wrong, and you need to
+fix it. This could happen for example, when you misspell a variable in
+a template file.
 
 Use [sqlitebrowser](https://sqlitebrowser.org/) to see if results are
 stored in the database correctly.

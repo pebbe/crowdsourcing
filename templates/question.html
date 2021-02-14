@@ -17,15 +17,15 @@
 
       <div id="question">
         <p>
-          <!-- CONFIG: .Image .Name -->
+          <!-- CONFIG question: .Image .Name -->
           <img src="../img/{{.Image}}" alt="{{.Name}}">
         </p>
         <p>
-          <!-- CONFIG: .Name -->
+          <!-- CONFIG question: .Name -->
           This is {{.Name}}
         </p>
         <p>
-          <!-- CONFIG: .Tagline -->
+          <!-- CONFIG question: .Tagline -->
           “ <em>{{.Tagline}}</em> ”
         </p>
       </div>
@@ -35,22 +35,22 @@
         <input type="hidden" name="qid" value="{{.Qid}}">
         <hr>
         <p>
-          <!-- CONFIG: .Name -->
+          <!-- CONFIG question: .Name -->
           What kind of animal is {{.Name}}?<br>
-          <!-- CONFIG: animal -->
+          <!-- CONFIG answer: animal -->
           <!-- The first input element as the autofocus attribute -->
           <input type="text" name="animal" maxlength="100" autofocus>
         </p>
         <p>
-          <!-- CONFIG: .Name -->
+          <!-- CONFIG question: .Name -->
           What is {{.Name}}'s primary colour?<br>
-          <!-- CONFIG: colour -->
+          <!-- CONFIG answer: colour -->
           <input type="text" name="colour" maxlength="100" >
         </p>
         <p>
-          <!-- CONFIG: .Name -->
+          <!-- CONFIG question: .Name -->
           How big is {{.Name}}?<br>
-          <!-- CONFIG: size + value -->
+          <!-- CONFIG answer: size + value -->
           <input type="radio" id="huge" name="size" value="5">
           <label for="huge">Huge</label><br>
           <input type="radio" id="large" name="size" value="4">

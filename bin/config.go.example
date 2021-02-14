@@ -1,18 +1,14 @@
 package main
 
-// TODO: documentation
-
 import (
-	"html/template"
+	"html/template" // Remove this if you don't use the template.HTML type
 )
 
 type questionType struct {
 
 	// All fields must start with an uppercase letter
 
-	// CONFIG: Image
-	// CONFIG: Name
-	// CONFIG: Tagline
+	// CONFIG question: Image Name Tagline
 	Image   string
 	Name    string
 	Tagline template.HTML // This field in the database must contain valid HTML
@@ -24,24 +20,28 @@ type questionType struct {
 }
 
 var (
-	// including trailing slash
+	// BEGIN CONFIG: configurable global variables
+
+	// URL of the application, including trailing slash
 	cBaseUrl = "https://my.domain/my/crowdsourcing/"
 
-	// sender name and mail address
-	cMailName = "My Crowdsourcing"
+	// For sending mail: name and mail address of sender
+	cMailName = "Crowdsourcing Demo"
 	cMailFrom = "me@my.domain"
 
-	// sender credentials
-	// leave this empty if the mail server doesn't need log in
+	// Username and password for the smtp server
+	// Leave these empty if the server doesn't need log in
 	cSmtpUser = ""
 	cSmtpPass = ""
 
-	// mail server, including port number
+	// Smtp server, including port number
 	cSmtpServ = "smtp.my.domain:25"
 
-	// to prevent name clashes with other cookies on the same site
-	cCookiePrefix = "mycrowd"
+	// To prevent name clashes with other cookies on the same site
+	cCookiePrefix = "democrowd"
 
-	// used for encryption
+	// Used for encryption
 	cSecret = "change this into some random text"
+
+	// END CONFIG: configurable global variables
 )

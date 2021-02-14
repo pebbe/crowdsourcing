@@ -54,7 +54,7 @@ func question() {
 		return
 	}
 
-	// CONFIG: image name tagline
+	// CONFIG question: image name tagline
 	rows, err = gDB.Query(fmt.Sprintf(`
 			SELECT qid,
 				image,
@@ -69,12 +69,12 @@ func question() {
 		return
 	}
 	var qid int
-	// CONFIG: image name tagline
+	// CONFIG question: image name tagline
 	var image string
 	var name string
 	var tagline string
 	for rows.Next() {
-		// CONFIG: image name tagline
+		// CONFIG question: image name tagline
 		if xx(rows.Scan(&qid, &image, &name, &tagline)) {
 			return
 		}
@@ -100,7 +100,7 @@ func question() {
 		Todo:    total - done - skipped,
 		Qid:     qid,
 
-		// CONFIG: image name tagline
+		// CONFIG question: image name tagline
 		Image:   image,
 		Name:    name,
 		Tagline: template.HTML(tagline),
