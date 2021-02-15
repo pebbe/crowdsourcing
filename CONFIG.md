@@ -155,3 +155,8 @@ a template file.
 
 Use [sqlitebrowser](https://sqlitebrowser.org/) to see if results are
 stored in the database correctly.
+
+## Trouble shooting
+
+What problems do you encounter? Let me know
+[here](https://github.com/pebbe/crowdsourcing/issues).

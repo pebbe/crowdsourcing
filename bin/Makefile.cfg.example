@@ -1,10 +1,14 @@
 
-# The Go compiler
-GO = /path/to/go
+# If the program `go` is in your search `PATH` you can simply use `go` as
+# the value. Otherwise, you need to supply the full path.
+#GO = /path/to/go
+GO = go
 
-# So Go knows where to create the 'pkg' and '.cache' directories
-# This is needed when you compile via the web server
-export HOME=/home/me
+# When at the time of compilation the variable of `HOME` is unknown,
+# for instance when you use the web server to compile the program,
+# you need to set and export the `HOME` variable, so Go knows
+# where to create its 'pkg' and '.cache' directories.
+#export HOME=/tmp/me
 
-# Just in case
+# Leave this, just in case.
 export GO111MODULE=on
