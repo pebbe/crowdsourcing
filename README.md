@@ -8,6 +8,5 @@ You can see a live demo at https://urd2.let.rug.nl/~kleiweg/crowdsourcing/bin/
 
 This runs on a web server with CGI enabled. It was tested on Apache2.
 
-For installation instructions, read INSTALL.md
-
-To configure the software for your own project, read CONFIG.md
+ 1. Read INSTALL.md for installation instructions.
+ 2. Read CONFIG.md for instructions on how to configure the software for your own project.
