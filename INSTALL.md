@@ -37,7 +37,7 @@ Choose a directory name for your project, and download the software to
 that directory of your website:
 
 ```sh
-cd /net/homepages/user/www
+cd {{/path/to/my/website}}
 git clone --depth 1 https://github.com/pebbe/crowdsourcing {{project}}
 ```
 
@@ -92,3 +92,21 @@ this, read the instructions in [CONFIG.md](CONFIG.md]).
 
 What problems do you encounter? Let me know
 [here](https://github.com/pebbe/crowdsourcing/issues).
+
+----
+
+When running `make`, you may get an error message that starts like this:
+
+```
+headers.go:4:2: cannot find package "github.com/dchest/authcookie" in any of:
+```
+
+This happens with older versions of Go. To fix this, run these
+commands once:
+
+```sh
+go get github.com/dchest/authcookie
+go get github.com/mattn/go-sqlite3
+```
+
+----
