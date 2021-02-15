@@ -50,11 +50,12 @@ func download() {
 		}
 
 		err = w.Write([]string{
-			fmt.Sprint(qid), // convert int to string
+			fmt.Sprint(qid), // Convert int to string
 			// CONFIG answer: animal colour size
 			animal,
 			colour,
-			fmt.Sprint(size), // convert int to string -- yes, that comma is needed
+			fmt.Sprint(size), // Convert int to string
+			// Yes, that comma after the last parameter is needed
 		})
 		if err != nil {
 			rows.Close()

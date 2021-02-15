@@ -10,26 +10,9 @@ import (
 
 func unskip() {
 
-	rows, err := gDB.Query(fmt.Sprintf(`
-			SELECT * FROM
-			( SELECT COUNT(*) FROM questions),
-			( SELECT COUNT(*) FROM answers WHERE uid = %d AND skip = 0),
-			( SELECT COUNT(*) FROM answers WHERE uid = %d AND skip > 0)`,
-		gUserID,
-		gUserID))
-	if xx(err) {
-		return
-	}
-	var total, done, skipped int
-	var ok bool
-	for rows.Next() {
-		if xx(rows.Scan(&total, &done, &skipped)) {
-			return
-		}
-		ok = true
-	}
+	total, skipped, done, ok := getDone()
 	if !ok {
-		xx(fmt.Errorf("Missing row"))
+		return
 	}
 
 	reset := strings.TrimSpace(gReq.FormValue("unskip"))

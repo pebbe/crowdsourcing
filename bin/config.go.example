@@ -19,7 +19,7 @@ type questionType struct {
 	Todo    int
 }
 
-var (
+const (
 	// BEGIN CONFIG: configurable global variables
 
 	// URL of the application, including trailing slash

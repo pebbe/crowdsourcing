@@ -9,25 +9,9 @@ import (
 
 func question() {
 
-	rows, err := gDB.Query(fmt.Sprintf(`
-			SELECT * FROM
-			( SELECT COUNT(*) FROM questions),
-			( SELECT COUNT(*) FROM answers WHERE uid = %d AND skip = 0),
-			( SELECT COUNT(*) FROM answers WHERE uid = %d AND skip > 0)`,
-		gUserID, gUserID))
-	if xx(err) {
-		return
-	}
-	var total, done, skipped int
-	var ok bool
-	for rows.Next() {
-		if xx(rows.Scan(&total, &done, &skipped)) {
-			return
-		}
-		ok = true
-	}
+	total, skipped, done, ok := getDone()
 	if !ok {
-		xx(fmt.Errorf("Missing row"))
+		return
 	}
 
 	if done+skipped >= total {
@@ -55,7 +39,7 @@ func question() {
 	}
 
 	// CONFIG question: image name tagline
-	rows, err = gDB.Query(fmt.Sprintf(`
+	rows, err := gDB.Query(fmt.Sprintf(`
 			SELECT qid,
 				image,
 				name,
@@ -105,4 +89,31 @@ func question() {
 		Name:    name,
 		Tagline: template.HTML(tagline),
 	}))
+}
+
+func getDone() (total, skipped, done int, ok bool) {
+	if !gUserAuth {
+		xx(fmt.Errorf("Not logged in"))
+		return
+	}
+	rows, err := gDB.Query(fmt.Sprintf(`
+			SELECT * FROM
+			( SELECT COUNT(*) FROM questions),
+			( SELECT COUNT(*) FROM answers WHERE uid = %d AND skip > 0),
+			( SELECT COUNT(*) FROM answers WHERE uid = %d AND skip = 0)`,
+		gUserID, gUserID))
+	if xx(err) {
+		return
+	}
+	for rows.Next() {
+		if xx(rows.Scan(&total, &skipped, &done)) {
+			return
+		}
+		ok = true
+	}
+	if !ok {
+		xx(fmt.Errorf("Missing row"))
+		return
+	}
+	return
 }

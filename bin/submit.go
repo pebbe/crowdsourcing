@@ -69,7 +69,7 @@ func submit() {
 	}
 
 	// CONFIG answer: animal colour size
-	// NOTE: the number of question marks must match the number of fields and arguments
+	// NOTE: The number of question marks must match the number of fields and arguments
 	_, err = tx.Exec("INSERT INTO answers(qid, uid, skip, animal, colour, size) VALUES (?, ?, ?, ?, ?, ?);",
 		qid,
 		gUserID,

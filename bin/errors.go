@@ -7,12 +7,12 @@ import (
 	"runtime"
 )
 
-// print plain error
+// Print plain error
 func x(err error, msg ...interface{}) bool {
 	return xerr(false, err, msg...)
 }
 
-// print error with line number
+// Print error with line number
 func xx(err error, msg ...interface{}) bool {
 	return xerr(true, err, msg...)
 }
@@ -36,7 +36,6 @@ func xerr(withLineno bool, err error, msg ...interface{}) bool {
 		}
 	}
 	headers()
-	// TODO: 'back'-button
 	fmt.Printf(`<html>
 <head>
 <title>Error</title>

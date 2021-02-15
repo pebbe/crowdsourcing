@@ -22,11 +22,6 @@ func loginForm() {
 	}
 	headers()
 	fmt.Print(string(b))
-
-	// TODO: remove expired log-in attempts
-	// als gebruiker al antwoorden heeft gegeven, dan alleen pw resetten
-	// anders record verwijderen
-
 }
 
 func loginRequest() {
@@ -55,12 +50,12 @@ func loginRequest() {
 
 	result, err := gDB.Exec(fmt.Sprintf("UPDATE `users` SET `sec` = %q, `pw` = %q, `expires` = %q WHERE `email` = %q",
 		sec, auth, expires, ehash))
-	if x(err) {
+	if xx(err) {
 		tx.Rollback()
 		return
 	}
 	n, err := result.RowsAffected()
-	if x(err) {
+	if xx(err) {
 		tx.Rollback()
 		return
 	}
@@ -73,7 +68,9 @@ func loginRequest() {
 		}
 	}
 
-	xx(tx.Commit())
+	if xx(tx.Commit()) {
+		return
+	}
 
 	err = sendmail(
 		email,
@@ -95,28 +92,52 @@ func loginRequest() {
 		return
 	}
 	headers()
-	xx(t.Execute(os.Stdout, email))
+	if xx(t.Execute(os.Stdout, email)) {
+		return
+	}
 }
 
 func login() {
 
+	// Remove expired log-in requests
+	now := time.Now().Format("2006-01-02T15:04:05")
+	tx, err := gDB.Begin()
+	if xx(err) {
+		return
+	}
+	// Only remove users that haven't submitted any data yet
+	_, err = gDB.Exec(fmt.Sprintf("DELETE FROM users WHERE `expires` < %q AND `uid` NOT IN ( SELECT `uid` FROM answers )", now))
+	if xx(err) {
+		tx.Rollback()
+		return
+	}
+	// These have already submitted data, don't remove user, only clear log-in tokens
+	_, err = gDB.Exec(fmt.Sprintf("UPDATE `users` SET `sec` = \"\", `pw` = \"\", `expires` = \"\" WHERE `expires` < %q", now))
+	if xx(err) {
+		tx.Rollback()
+		return
+	}
+	if xx(tx.Commit()) {
+		return
+	}
+
 	pw := strings.TrimSpace(gReq.FormValue("pw"))
 	if pw == "" {
-		pw = "none" // anders kan iemand zonder password inloggen
+		pw = "none" // Or someone without a password could log in
 	}
 
 	rows, err := gDB.Query(fmt.Sprintf("SELECT `email`,`uid`,`sec` FROM `users` WHERE `pw` = %q", pw))
-	if x(err) {
+	if xx(err) {
 		return
 	}
 	if rows.Next() {
 		err := rows.Scan(&gUserHash, &gUserID, &gUserSec)
 		rows.Close()
-		if x(err) {
+		if xx(err) {
 			return
 		}
 		_, err = gDB.Exec(fmt.Sprintf("UPDATE `users` SET `pw` = '', `expires` = '9999' WHERE `email` = %q", gUserHash))
-		if x(err) {
+		if xx(err) {
 			return
 		}
 		gUserAuth = true

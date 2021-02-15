@@ -6,14 +6,18 @@ import (
 	"database/sql"
 	"fmt"
 	"net/http/cgi"
+	"runtime/debug"
 )
-
-// TODO in all sources:
-//   x(error) vs xx(error)
 
 func main() {
 
-	// TODO: panic -> recover
+	defer func() {
+		if r := recover(); r != nil {
+			fmt.Print("Content-type: text/plain\n\n")
+			fmt.Println(r)
+			fmt.Println(string(debug.Stack()))
+		}
+	}()
 
 	var err error
 	gReq, err = cgi.Request()
@@ -52,8 +56,9 @@ func main() {
 			submit()
 		} else if action == "unskip" {
 			unskip()
+		} else {
+			x(fmt.Errorf("Missing or invalid POST action %q", action))
 		}
-		// TODO: else error
 	} else {
 		x(fmt.Errorf("Method not allowed: %s", gReq.Method))
 	}

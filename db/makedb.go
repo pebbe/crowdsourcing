@@ -14,7 +14,7 @@ func main() {
 
 	////////////////////////////////////////////////////////////////
 	//
-	// open database
+	// Open database
 	//
 
 	db, err := sql.Open("sqlite3", "data.sqlite")
@@ -24,7 +24,7 @@ func main() {
 
 	////////////////////////////////////////////////////////////////
 	//
-	// create table: questions
+	// Create table: questions
 	//
 
 	// CONFIG question: image name tagline
@@ -40,7 +40,7 @@ func main() {
 
 	////////////////////////////////////////////////////////////////
 	//
-	// read data into table: questions
+	// Read data into table: questions
 	//
 
 	tx, err := db.Begin()
@@ -83,7 +83,7 @@ func main() {
 
 	////////////////////////////////////////////////////////////////
 	//
-	// create table: answers
+	// Create table: answers
 	//
 
 	// CONFIG answer: animal colour size
@@ -102,7 +102,7 @@ func main() {
 
 	////////////////////////////////////////////////////////////////
 	//
-	// create table: users
+	// Create table: users
 	//
 
 	_, err = db.Exec(`CREATE TABLE users (
@@ -118,7 +118,7 @@ func main() {
 
 	////////////////////////////////////////////////////////////////
 	//
-	// make some indexes
+	// Make some indexes
 	//
 
 	for _, cmd := range []string{
@@ -133,7 +133,7 @@ func main() {
 
 	////////////////////////////////////////////////////////////////
 	//
-	// close database
+	// Close database
 	//
 
 	err = db.Close()
