@@ -86,7 +86,7 @@ questionnaire.
 ### Set up your own survey
 
 The next step is to change the demo survey into your own survey. To do
-this, read the instructions in [CONFIG.md](CONFIG.md]).
+this, read the instructions in [CONFIG.md](CONFIG.md).
 
 ### Trouble shooting
 
