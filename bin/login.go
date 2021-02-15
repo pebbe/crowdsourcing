@@ -15,6 +15,10 @@ import (
 	"time"
 )
 
+const (
+	expireFormat = "2006-01-02T15:04:05"
+)
+
 func loginForm() {
 	b, err := ioutil.ReadFile("../templates/login.html")
 	if xx(err) {
@@ -46,7 +50,7 @@ func loginRequest() {
 
 	auth := rand16()
 	sec := rand16()
-	expires := time.Now().Add(time.Hour).Format("2006-01-02T15:04:05")
+	expires := time.Now().Add(time.Hour).Format(expireFormat)
 
 	result, err := gDB.Exec(fmt.Sprintf("UPDATE `users` SET `sec` = %q, `pw` = %q, `expires` = %q WHERE `email` = %q",
 		sec, auth, expires, ehash))
@@ -99,25 +103,7 @@ func loginRequest() {
 
 func login() {
 
-	// Remove expired log-in requests
-	now := time.Now().Format("2006-01-02T15:04:05")
-	tx, err := gDB.Begin()
-	if xx(err) {
-		return
-	}
-	// Only remove users that haven't submitted any data yet
-	_, err = gDB.Exec(fmt.Sprintf("DELETE FROM users WHERE `expires` < %q AND `uid` NOT IN ( SELECT `uid` FROM answers )", now))
-	if xx(err) {
-		tx.Rollback()
-		return
-	}
-	// These have already submitted data, don't remove user, only clear log-in tokens
-	_, err = gDB.Exec(fmt.Sprintf("UPDATE `users` SET `sec` = \"\", `pw` = \"\", `expires` = \"\" WHERE `expires` < %q", now))
-	if xx(err) {
-		tx.Rollback()
-		return
-	}
-	if xx(tx.Commit()) {
+	if ok := expire(); !ok {
 		return
 	}
 
@@ -152,24 +138,62 @@ func login() {
 	}
 }
 
-func loggedin() {
-	if auth, err := gReq.Cookie(cCookiePrefix + "-auth"); err == nil {
-		s := strings.SplitN(authcookie.Login(auth.Value, []byte(cSecret)), "|", 2)
-		if len(s) == 2 {
-			gUserSec = s[0]
-			gUserHash = s[1]
-			rows, err := gDB.Query(fmt.Sprintf("SELECT `uid`,`sec` FROM `users` WHERE `email` = %q", gUserHash))
-			if err == nil {
-				for rows.Next() {
-					var sec string
-					rows.Scan(&gUserID, &sec)
-					if sec == gUserSec {
-						gUserAuth = true
-					}
-				}
+func expire() (ok bool) {
+
+	// Remove expired log-in requests
+
+	now := time.Now().Format(expireFormat)
+	tx, err := gDB.Begin()
+	if xx(err) {
+		return
+	}
+
+	// Only remove users that haven't submitted any data yet
+	_, err = gDB.Exec(fmt.Sprintf("DELETE FROM users WHERE `expires` < %q AND `uid` NOT IN ( SELECT `uid` FROM answers )", now))
+	if xx(err) {
+		tx.Rollback()
+		return
+	}
+
+	// These have already submitted data, don't remove user, only clear log-in tokens
+	_, err = gDB.Exec(fmt.Sprintf("UPDATE `users` SET `sec` = \"\", `pw` = \"\", `expires` = \"\" WHERE `expires` < %q", now))
+	if xx(err) {
+		tx.Rollback()
+		return
+	}
+	if xx(tx.Commit()) {
+		return
+	}
+
+	ok = true
+	return
+}
+
+func getLogin() (ok bool) {
+	auth, err := gReq.Cookie(cCookiePrefix + "-auth")
+	if xx(err) {
+		return
+	}
+	s := strings.SplitN(authcookie.Login(auth.Value, []byte(cSecret)), "|", 2)
+	if len(s) == 2 {
+		gUserSec = s[0]
+		gUserHash = s[1]
+		rows, err := gDB.Query(fmt.Sprintf("SELECT `uid`,`sec` FROM `users` WHERE `email` = %q", gUserHash))
+		if xx(err) {
+			return
+		}
+		for rows.Next() {
+			var sec string
+			if xx(rows.Scan(&gUserID, &sec)) {
+				return
+			}
+			if sec == gUserSec {
+				gUserAuth = true // Yes, this user has logged in
 			}
 		}
 	}
+	ok = true
+	return
 }
 
 func rand16() string {

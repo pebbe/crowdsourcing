@@ -34,7 +34,9 @@ func main() {
 	}
 	defer gDB.Close()
 
-	loggedin()
+	if ok := getLogin(); !ok {
+		return
+	}
 
 	action := gReq.FormValue("action")
 	if gReq.Method == "GET" {

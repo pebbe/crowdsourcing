@@ -1,8 +1,10 @@
 
-# the Go compiler
+# The Go compiler
 GO = /path/to/go
 
-# so Go knows where to create the 'pkg' and '.cache' directories
-# this is needed when you compile via the web server
+# So Go knows where to create the 'pkg' and '.cache' directories
+# This is needed when you compile via the web server
 export HOME=/home/me
+
+# Just in case
 export GO111MODULE=on
