@@ -82,7 +82,7 @@ This involves items 1 and 2 from the list at the top.
 Go to the `bin` subdirectory.
 
 The server consists of a single program `index` in the `bin`
-directory that handles all requests, from log in, to creatings
+directory that handles all requests, from log in, to creating
 questionnaire forms, to processing and storing results. The program is
 built from several source files, some of which you need to modify. To
 see which these files are, run this on the command line:
