@@ -172,8 +172,8 @@ func expire() (ok bool) {
 func getLogin() (ok bool) {
 	auth, err := gReq.Cookie(cCookiePrefix + "-auth")
 	if err != nil {
-		
-		return true
+		ok = true
+		return
 	}
 	s := strings.SplitN(authcookie.Login(auth.Value, []byte(cSecret)), "|", 2)
 	if len(s) == 2 {
