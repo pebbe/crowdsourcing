@@ -35,7 +35,7 @@ database and stores all the question data into the database. All parts
 of the file you need to modify are marked with the comment
 [`CONFIG`](https://github.com/pebbe/crowdsourcing/search?q=CONFIG).
 The example uses the question fields (item 1) `image`, `name`, and
-`tagline`, and the answer fields (item 2) `animal`, `colour`, and
+`tagline`, and the *answer data* fields (item 2) `animal`, `colour`, and
 `size`. All field are of type `TEXT` in SQLite, except `size` which is
 of type `INTEGER`. Change those fields, but don't change any of the
 other fields.
