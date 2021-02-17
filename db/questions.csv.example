@@ -1,12 +1,12 @@
 # This MUST BE encoded as UTF-8
 # Fields:
-# - qid:     Question id, a unique integer, REQUIRED
+# - label:   Identifier, a unique string, REQUIRED
 # - image:   Name of file with picture of animal, CONFIG question
 # - name:    Name of animal, any text allowed, CONFIG question
 # - tagline: What the animal has to say, MUST BE valid HTML, CONFIG question
 # Do NOT put spaces before a comma
-1, pic01.jpg, Mrs Jones,             <b>Don't touch</b> my eggs!
-2, pic02.jpg, Ms Smith,              What ya doin'?
-3, pic03.jpg, "Ms ""Mighty"" Brown", I <b>do not</b> give chocolate milk
-4, pic04.jpg, Capt'n Jack,           I am a <b>good boy</b>
-5, pic05.jpg, Marie Antoinette,      Meow
+GALLUS, pic01.jpg, Mrs Jones,             <b>Don't touch</b> my eggs!
+CERVIS, pic02.jpg, Ms Smith,              What ya doin'?
+BOVIS,  pic03.jpg, "Ms ""Mighty"" Brown", I <b>do not</b> give chocolate milk
+CANIS,  pic04.jpg, Capt'n Jack,           I am a <b>good boy</b>
+FELIS,  pic05.jpg, Marie Antoinette,      Meow

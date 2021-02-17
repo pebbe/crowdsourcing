@@ -11,11 +11,11 @@ func download() {
 
 	// CONFIG answer: animal colour size
 	rows, err := gDB.Query(`
-			SELECT qid,
+			SELECT label,
 				animal,
 				colour,
 				size
-			FROM answers
+			FROM answers LEFT JOIN questions USING(qid)
 			WHERE skip = 0
 			ORDER by qid,
 				animal,
@@ -39,10 +39,10 @@ func download() {
 		var colour string
 		var size int
 
-		var qid int
+		var label string
 
 		// CONFIG answer: animal colour size
-		err := rows.Scan(&qid, &animal, &colour, &size)
+		err := rows.Scan(&label, &animal, &colour, &size)
 		if err != nil {
 			rows.Close()
 			fmt.Println(err)
@@ -50,7 +50,7 @@ func download() {
 		}
 
 		err = w.Write([]string{
-			fmt.Sprint(qid), // Convert int to string
+			label,
 			// CONFIG answer: animal colour size
 			animal,
 			colour,

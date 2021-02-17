@@ -30,6 +30,7 @@ func main() {
 	// CONFIG question: image name tagline
 	_, err = db.Exec(`CREATE TABLE questions (
                         qid     INTEGER PRIMARY KEY,
+                        label   TEXT UNIQUE,
                         image   TEXT,
                         name    TEXT,
                         tagline TEXT
@@ -63,15 +64,13 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		// CONFIG question: image + record[1]
-		// CONFIG question: name + record[2]
-		// CONFIG question: tagline + record[3]
+		// CONFIG question: image name tagline
 		// NOTE: number of question marks must match number of fields and arguments
-		_, err = tx.Exec("INSERT INTO questions(qid, image, name, tagline) VALUES (?, ?, ?, ?);",
-			record[0],
-			record[1],
-			record[2],
-			record[3])
+		_, err = tx.Exec("INSERT INTO questions(label, image, name, tagline) VALUES (?, ?, ?, ?);",
+			record[0], // label (required)
+			record[1], // image
+			record[2], // name
+			record[3]) // tagline
 		if err != nil {
 			log.Fatal(err)
 		}
