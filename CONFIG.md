@@ -109,9 +109,9 @@ Again, it's all about *question data* (item 1), `image`, `name`, and
 ### `config.go`
 
 In the file [`config.go`](bin/config.go.example) the question data
-types are defined as parts of the `questionType` structure. As part of
-the structure, the names start with an upper case letter. In all other
-parts of the program lower case is used.
+types are defined as parts of the `questionType` structure. In here,
+the names start with an upper case letter. In all other parts of the
+program, lower case is used.
 
 `Image` and `Name` are defined as type `string`. But `Tagline` is
 defined as a special type, `template.HTML`. This is used for data that
