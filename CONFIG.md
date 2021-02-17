@@ -100,7 +100,7 @@ the example, and result data, `animal`, `colour`, `size`.
 
 ### `config.go`
 
-In the file [`config.go`](bin/config.go) the question data types are defined as parts
+In the file [`config.go`](bin/config.go.example) the question data types are defined as parts
 of the `questionType` structure. As part of the structure, the names
 start with an upper case letter. In all other parts of the program
 lower case is used.
