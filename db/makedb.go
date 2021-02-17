@@ -22,6 +22,16 @@ func main() {
 		log.Fatal(err)
 	}
 
+	for _, p := range []string{
+		"PRAGMA encoding = 'UTF-8';",
+		"PRAGMA foreign_keys = 1;",
+	} {
+		_, err = db.Exec(p)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+
 	////////////////////////////////////////////////////////////////
 	//
 	// Create table: questions
@@ -29,7 +39,7 @@ func main() {
 
 	// CONFIG question: image name tagline
 	_, err = db.Exec(`CREATE TABLE questions (
-                        qid     INTEGER PRIMARY KEY,
+                        qid     INTEGER PRIMARY KEY AUTOINCREMENT,
                         label   TEXT UNIQUE,
                         image   TEXT,
                         name    TEXT,
@@ -82,6 +92,22 @@ func main() {
 
 	////////////////////////////////////////////////////////////////
 	//
+	// Create table: users
+	//
+
+	_, err = db.Exec(`CREATE TABLE users (
+                        uid     INTEGER PRIMARY KEY AUTOINCREMENT,
+                        email   TEXT NOT NULL UNIQUE,
+                        sec     TEXT,
+                        pw      TEXT,
+                        expires TEXT
+                      );`)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	////////////////////////////////////////////////////////////////
+	//
 	// Create table: answers
 	//
 
@@ -93,23 +119,9 @@ func main() {
                         skip    INTEGER DEFAULT 0,
                         animal  TEXT DEFAULT "",
                         colour  TEXT DEFAULT "",
-                        size    INTEGER DEFAULT 0
-                      );`)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	////////////////////////////////////////////////////////////////
-	//
-	// Create table: users
-	//
-
-	_, err = db.Exec(`CREATE TABLE users (
-                        uid     INTEGER PRIMARY KEY AUTOINCREMENT,
-                        email   TEXT NOT NULL UNIQUE,
-                        sec     TEXT,
-                        pw      TEXT,
-                        expires TEXT
+                        size    INTEGER DEFAULT 0,
+                      FOREIGN KEY(qid) REFERENCES questions(qid),
+                      FOREIGN KEY(uid) REFERENCES users(uid)
                       );`)
 	if err != nil {
 		log.Fatal(err)
