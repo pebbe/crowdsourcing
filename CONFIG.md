@@ -27,6 +27,21 @@ first field are one or more fields that are used for parts of the page
 of the questionnaire. The example uses three fields, `image`, `name`,
 and `tagline`, which are all strings.
 
+```
+# This MUST BE encoded as UTF-8
+# Fields:
+# - qid:     Question id, a unique integer, REQUIRED
+# - image:   Name of file with picture of animal, CONFIG question
+# - name:    Name of animal, any text allowed, CONFIG question
+# - tagline: What the animal has to say, MUST BE valid HTML, CONFIG question
+# Do NOT put spaces before a comma
+1, pic01.jpg, Mrs Jones,             <b>Don't touch</b> my eggs!
+2, pic02.jpg, Ms Smith,              What ya doin'?
+3, pic03.jpg, "Ms ""Mighty"" Brown", I <b>do not</b> give chocolate milk
+4, pic04.jpg, Capt'n Jack,           I am a <b>good boy</b>
+5, pic05.jpg, Marie Antoinette,      Meow
+```
+
 You need to edit the file `makedb.go` that creates the database and
 stores all the question data into the database. All parts of the file
 you need to modify are marked with the comment `CONFIG`. The example
@@ -38,7 +53,7 @@ those fields, but don't change any of the other fields.
 When you're done, run the command `make` on the command line. This
 creates the program `makedb` and creates the SQLite database.
 
-**NOTE:** This will deleted any data already collected.
+**NOTE:** This will delete any data already collected.
 
 You can use the program [sqlitebrowser](https://sqlitebrowser.org/) to
 inspect the database.
