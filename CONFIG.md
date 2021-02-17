@@ -7,8 +7,9 @@ needs.
 There are three things to consider:
 
  1. What data do I need to present a page of the questionnaire to the
-    participant?
+    participant? This is the *question data*.
  2. What data do I get as part of the answer from the participant?
+    This isthe *answer data*.
  3. How do I present a page of the questionnaire?
 
 ### Creating the database
@@ -20,7 +21,7 @@ the `db` subdirectory.
 
 Go to the `db` subdirectory.
 
-Put all your question data in the *comma-separated values* file
+Put all your *question data* in the *comma-separated values* file
 `questions.csv` ([csv](https://golang.org/pkg/encoding/csv/)). The
 first field of each record must be a unique integer. Following the
 first field are one or more fields that are used for parts of the page
