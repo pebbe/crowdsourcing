@@ -117,6 +117,17 @@ func main() {
 
 	////////////////////////////////////////////////////////////////
 	//
+	// Create a view for easy browsing of answers
+	//
+
+	_, err = db.Exec(`CREATE VIEW results AS
+        SELECT * FROM answers LEFT JOIN questions USING(qid);`)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	////////////////////////////////////////////////////////////////
+	//
 	// Make some indexes
 	//
 

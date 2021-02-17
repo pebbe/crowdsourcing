@@ -15,7 +15,7 @@ func download() {
 				animal,
 				colour,
 				size
-			FROM answers LEFT JOIN questions USING(qid)
+			FROM results
 			WHERE skip = 0
 			ORDER by qid,
 				animal,
