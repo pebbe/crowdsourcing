@@ -28,20 +28,7 @@ first field are one or more fields that are used for parts of the page
 of the questionnaire. The example uses three fields, `image`, `name`,
 and `tagline`, which are all strings.
 
-```
-# This MUST BE encoded as UTF-8
-# Fields:
-# - qid:     Question id, a unique integer, REQUIRED
-# - image:   Name of file with picture of animal, CONFIG question
-# - name:    Name of animal, any text allowed, CONFIG question
-# - tagline: What the animal has to say, MUST BE valid HTML, CONFIG question
-# Do NOT put spaces before a comma
-1, pic01.jpg, Mrs Jones,             <b>Don't touch</b> my eggs!
-2, pic02.jpg, Ms Smith,              What ya doin'?
-3, pic03.jpg, "Ms ""Mighty"" Brown", I <b>do not</b> give chocolate milk
-4, pic04.jpg, Capt'n Jack,           I am a <b>good boy</b>
-5, pic05.jpg, Marie Antoinette,      Meow
-```
+See [`questions.csv.example`](db/questions.csv.example)
 
 You need to edit the file [`makedb.go`](db/makedb.go) that creates the
 database and stores all the question data into the database. All parts
@@ -113,7 +100,7 @@ the example, and result data, `animal`, `colour`, `size`.
 
 ### `config.go`
 
-In the file `config.go` the question data types are defined as parts
+In the file [`config.go`](bin/config.go) the question data types are defined as parts
 of the `questionType` structure. As part of the structure, the names
 start with an upper case letter. In all other parts of the program
 lower case is used.
@@ -130,14 +117,14 @@ the `"html/template"` import at the top of the file.
 
 ### `download.go`
 
-In the file `download.go` only the result types are used, in the
+In the file [`download.go`](bin/download.go) only the result types are used, in the
 example these are `animal`, `colour`, both of type `string`, and
 `size` of type `int`. At one location, the value `size` must be
 converted to a string, which is done with the `fmt.Sprint` function.
 
 ### `question.go`
 
-In the file `question.go` only the question types are used. Here, the
+In the file [`question.go`](bin/question.go) only the question types are used. Here, the
 template for the questionnaire is converted to html with all the
 proper data inserted. The types of `image`, `name`, and `tagline` are
 all `string`. But at the bottom of the file, where the values are put
@@ -146,7 +133,7 @@ type `template.HTML`.
 
 ### `submit.go`
 
-In the file `submit.go` the submitted results are parsed, checked, and
+In the file [`submit.go`](bin/submit.go) the submitted results are parsed, checked, and
 when OK, stored into the database.
 
 In the example, the values of `animal` and `colour` are retrieved as
