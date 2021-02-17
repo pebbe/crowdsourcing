@@ -21,24 +21,23 @@ the `db` subdirectory.
 
 Go to the `db` subdirectory.
 
-Put all your *question data* (item 1) in the *comma-separated values* file
-`questions.csv` ([csv](https://golang.org/pkg/encoding/csv/)). The
-first field of each record must be a unique integer. Following the
-first field are one or more fields that are used for parts of the page
-of the questionnaire. The example uses three fields, `image`, `name`,
-and `tagline`, which are all strings.
-
-See [`questions.csv.example`](db/questions.csv.example)
+Put all your *question data* (item 1) in the *comma-separated values*
+file [`questions.csv`](db/questions.csv.example)
+(see: [csv](https://golang.org/pkg/encoding/csv/)). The first field of each
+record must be a unique integer. Following the first field are one or
+more fields that are used for parts of the page of the questionnaire.
+The example uses three fields, `image`, `name`, and `tagline`, which
+are all strings.
 
 You need to edit the file [`makedb.go`](db/makedb.go) that creates the
 database and stores all the question data into the database. All parts
 of the file you need to modify are marked with the comment
 [`CONFIG`](https://github.com/pebbe/crowdsourcing/search?q=CONFIG).
 The example uses the question fields (item 1) `image`, `name`, and
-`tagline`, and the *answer data* fields (item 2) `animal`, `colour`, and
-`size`. All field are of type `TEXT` in SQLite, except `size` which is
-of type `INTEGER`. Change those fields, but don't change any of the
-other fields.
+`tagline`, and the *answer data* fields (item 2) `animal`, `colour`,
+and `size`. All field are of type `TEXT` in SQLite, except `size`
+which is of type `INTEGER`. Change those fields, but don't change any
+of the other fields.
 
 When you're done, run the command `make` on the command line. This
 creates the program `makedb` and creates the SQLite database.
@@ -55,11 +54,12 @@ emphasis is on the third item.
 
 Go to the `templates` subdirectory.
 
-You need to edit the file [`question.html`](templates/question.html) which is mostly a regular
-html file, but contains some special things between double curly
-brackets where values are inserted when the web page is created. It is
-a [template](https://golang.org/pkg/html/template/) file, like all
-other files in this directory.
+You need to edit the file [`question.html`](templates/question.html)
+which is mostly a regular html file, but contains some special things
+between double curly brackets where values are inserted when the web
+page is created. It is a
+[template](https://golang.org/pkg/html/template/) file, like all other
+files in this directory.
 
 There are question parameters. In the example these are `image`,
 `name`, and `tagline`, and are used with a leading dot and an
@@ -95,15 +95,16 @@ see which these files are, run this on the command line:
 grep -l CONFIG *.go
 ```
 
-Again, it's all about question data, `image`, `name`, and `tagline` in
-the example, and result data, `animal`, `colour`, `size`.
+Again, it's all about *question data* (item 1), `image`, `name`, and
+`tagline` in the example, and *answer data* (item 2), `animal`,
+`colour`, `size`.
 
 ### `config.go`
 
-In the file [`config.go`](bin/config.go.example) the question data types are defined as parts
-of the `questionType` structure. As part of the structure, the names
-start with an upper case letter. In all other parts of the program
-lower case is used.
+In the file [`config.go`](bin/config.go.example) the question data
+types are defined as parts of the `questionType` structure. As part of
+the structure, the names start with an upper case letter. In all other
+parts of the program lower case is used.
 
 `Image` and `Name` are defined as type `string`. But `Tagline` is
 defined as a special type, `template.HTML`. This is used for data that
@@ -117,24 +118,25 @@ the `"html/template"` import at the top of the file.
 
 ### `download.go`
 
-In the file [`download.go`](bin/download.go) only the result types are used, in the
-example these are `animal`, `colour`, both of type `string`, and
-`size` of type `int`. At one location, the value `size` must be
-converted to a string, which is done with the `fmt.Sprint` function.
+In the file [`download.go`](bin/download.go) only the result types are
+used, in the example these are `animal`, `colour`, both of type
+`string`, and `size` of type `int`. At one location, the value `size`
+must be converted to a string, which is done with the `fmt.Sprint`
+function.
 
 ### `question.go`
 
-In the file [`question.go`](bin/question.go) only the question types are used. Here, the
-template for the questionnaire is converted to html with all the
-proper data inserted. The types of `image`, `name`, and `tagline` are
-all `string`. But at the bottom of the file, where the values are put
-into the `questionType` struct, the value of `tagline` is converted to
-type `template.HTML`.
+In the file [`question.go`](bin/question.go) only the question types
+are used. Here, the template for the questionnaire is converted to
+html with all the proper data inserted. The types of `image`, `name`,
+and `tagline` are all `string`. But at the bottom of the file, where
+the values are put into the `questionType` struct, the value of
+`tagline` is converted to type `template.HTML`.
 
 ### `submit.go`
 
-In the file [`submit.go`](bin/submit.go) the submitted results are parsed, checked, and
-when OK, stored into the database.
+In the file [`submit.go`](bin/submit.go) the submitted results are
+parsed, checked, and when OK, stored into the database.
 
 In the example, the values of `animal` and `colour` are retrieved as
 type `string`, while the value of `size` is converted to type `int`.
