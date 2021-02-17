@@ -43,13 +43,15 @@ and `tagline`, which are all strings.
 5, pic05.jpg, Marie Antoinette,      Meow
 ```
 
-You need to edit the file [makedb.go](db/makedb.go) that creates the database and
-stores all the question data into the database. All parts of the file
-you need to modify are marked with the comment `CONFIG`. The example
-uses the question fields (item 1) `image`, `name`, and `tagline`, and the
-answer fields (item 2) `animal`, `colour`, and `size`. All field are of type
-`TEXT` in SQLite, except `size` which is of type `INTEGER`. Change
-those fields, but don't change any of the other fields.
+You need to edit the file [`makedb.go`](db/makedb.go) that creates the
+database and stores all the question data into the database. All parts
+of the file you need to modify are marked with the comment
+[`CONFIG`](https://github.com/pebbe/crowdsourcing/search?q=CONFIG).
+The example uses the question fields (item 1) `image`, `name`, and
+`tagline`, and the answer fields (item 2) `animal`, `colour`, and
+`size`. All field are of type `TEXT` in SQLite, except `size` which is
+of type `INTEGER`. Change those fields, but don't change any of the
+other fields.
 
 When you're done, run the command `make` on the command line. This
 creates the program `makedb` and creates the SQLite database.
