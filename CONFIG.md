@@ -43,7 +43,7 @@ and `tagline`, which are all strings.
 5, pic05.jpg, Marie Antoinette,      Meow
 ```
 
-You need to edit the file `makedb.go` that creates the database and
+You need to edit the file [makedb.go](db/makedb.go) that creates the database and
 stores all the question data into the database. All parts of the file
 you need to modify are marked with the comment `CONFIG`. The example
 uses the question fields (item 1) `image`, `name`, and `tagline`, and the
