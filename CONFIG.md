@@ -68,7 +68,7 @@ emphasis is on the third item.
 
 Go to the `templates` subdirectory.
 
-You need to edit the file `question.html` which is mostly a regular
+You need to edit the file [`question.html`](templates/question.html) which is mostly a regular
 html file, but contains some special things between double curly
 brackets where values are inserted when the web page is created. It is
 a [template](https://golang.org/pkg/html/template/) file, like all
