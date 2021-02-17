@@ -24,7 +24,7 @@ Go to the `db` subdirectory.
 Put all your *question data* (item 1) in the *comma-separated values*
 file [`questions.csv`](db/questions.csv.example)
 (see: [csv](https://golang.org/pkg/encoding/csv/)). The first field of each
-record must be a unique integer. Following the first field are one or
+record must be a unique identifier. Following the first field are one or
 more fields that are used for parts of the page of the questionnaire.
 The example uses three fields, `image`, `name`, and `tagline`, which
 are all strings.
@@ -127,7 +127,7 @@ the `"html/template"` import at the top of the file.
 ### `download.go`
 
 In the file [`download.go`](bin/download.go) only the result types are
-used, in the example these are `animal`, `colour`, both of type
+used, in the example these are `animal` and `colour`, both of type
 `string`, and `size` of type `int`. At one location, the value `size`
 must be converted to a string, which is done with the `fmt.Sprint`
 function.
@@ -148,7 +148,7 @@ parsed, checked, and when OK, stored into the database.
 
 In the example, the values of `animal` and `colour` are retrieved as
 type `string`, while the value of `size` is converted to type `int`.
-The length of the string values is limited to 100 charachters. There
+The length of the string values is limited to 100 characters. There
 are checks for empty values and for a correct value of `size`.
 
 ## Building and testing the server
