@@ -66,7 +66,9 @@ There are question parameters. In the example these are `image`,
 uppercase first letter as `{{.Image}}`, `{{.Name}}`, and
 `{{.Tagline}}`. You need to change these.
 
-All things you need to change are marked with a `CONFIG` comment.
+All things you need to change are marked with a
+[`CONFIG`](https://github.com/pebbe/crowdsourcing/search?q=CONFIG)
+comment.
 
 There are form fields for the answer. Some are required, inputs of
 type `hidden`. You need to change only the other form fields. The
@@ -89,8 +91,13 @@ Go to the `bin` subdirectory.
 The server consists of a single program `index` in the `bin`
 directory that handles all requests, from log in, to creating
 questionnaire forms, to processing and storing results. The program is
-built from several source files, some of which you need to modify. To
-see which these files are, run this on the command line:
+built from several source files, some of which you need to modify. 
+
+Again, all things you need to change are marked with a
+[`CONFIG`](https://github.com/pebbe/crowdsourcing/search?q=CONFIG)
+comment.
+
+To see which these files are, run this on the command line:
 ```
 grep -l CONFIG *.go
 ```
