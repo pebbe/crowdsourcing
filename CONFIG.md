@@ -9,7 +9,7 @@ There are three things to consider:
  1. What data do I need to present a page of the questionnaire to the
     participant? This is the *question data*.
  2. What data do I get as part of the answer from the participant?
-    This isthe *answer data*.
+    This is the *answer data*.
  3. How do I present a page of the questionnaire?
 
 ### Creating the database
@@ -21,7 +21,7 @@ the `db` subdirectory.
 
 Go to the `db` subdirectory.
 
-Put all your *question data* in the *comma-separated values* file
+Put all your *question data* (item 1) in the *comma-separated values* file
 `questions.csv` ([csv](https://golang.org/pkg/encoding/csv/)). The
 first field of each record must be a unique integer. Following the
 first field are one or more fields that are used for parts of the page
@@ -46,8 +46,8 @@ and `tagline`, which are all strings.
 You need to edit the file `makedb.go` that creates the database and
 stores all the question data into the database. All parts of the file
 you need to modify are marked with the comment `CONFIG`. The example
-uses the question fields `image`, `name`, and `tagline`, and the
-answer fields `animal`, `colour`, and `size`. All field are of type
+uses the question fields (item 1) `image`, `name`, and `tagline`, and the
+answer fields (item 2) `animal`, `colour`, and `size`. All field are of type
 `TEXT` in SQLite, except `size` which is of type `INTEGER`. Change
 those fields, but don't change any of the other fields.
 
