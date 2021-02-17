@@ -58,8 +58,9 @@ You need to edit the file [`question.html`](templates/question.html)
 which is mostly a regular html file, but contains some special things
 between double curly brackets where values are inserted when the web
 page is created. It is a
-[template](https://golang.org/pkg/html/template/) file, like all other
-files in this directory.
+[html/template](https://golang.org/pkg/html/template/) file, like all other
+files in this directory. (See also
+[text/template](https://golang.org/pkg/text/template/) for full syntax.)
 
 There are question parameters. In the example these are `image`,
 `name`, and `tagline`, and are used with a leading dot and an
