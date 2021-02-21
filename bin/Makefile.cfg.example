@@ -4,11 +4,14 @@
 #GO = /path/to/go
 GO = go
 
-# When at the time of compilation the variable of `HOME` is unknown,
+# If you are building the program on a different machine than running
+# the program, it may not work because of incompatible libraries.
+# In that case, do a static build.
+OPTS = -v -ldflags="-extldflags=-static" -tags sqlite_omit_load_extension
+#OPTS = -v
+
+# If at the time of compilation the variable of `HOME` is unknown,
 # for instance when you use the web server to compile the program,
 # you need to set and export the `HOME` variable, so Go knows
 # where to create its 'pkg' and '.cache' directories.
 #export HOME=/tmp/me
-
-# Leave this, just in case.
-export GO111MODULE=on

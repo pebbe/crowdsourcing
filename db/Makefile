@@ -2,7 +2,7 @@
 include ../bin/Makefile.cfg
 
 % : %.go
-	$(GO) build -v $<
+	$(GO) build $(OPTS) $<
 
 data.sqlite: makedb questions.csv
 	rm -f data.sqlite
