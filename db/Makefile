@@ -1,9 +1,4 @@
 
-include ../bin/Makefile.cfg
-
-% : %.go
-	$(GO) build $(OPTS) $<
-
-data.sqlite: makedb questions.csv
+data.sqlite: makedb.go questions.csv
 	rm -f data.sqlite
-	./makedb
+	go run -v $<
