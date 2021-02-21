@@ -1,4 +1,6 @@
 
+include ../bin/Makefile.cfg
+
 data.sqlite: makedb.go questions.csv
 	rm -f data.sqlite
-	go run -v $<
+	$(GO) run -v $<
