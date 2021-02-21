@@ -8,25 +8,21 @@ Apache2.
 You need the [Go](https://golang.org/) compiler, and the standard
 build tools `gcc` and `make`.
 
-The software consists of two programs. One is for initialising the
-database, and can be run anywhere. You can then upload the database to
-your web server.
+This software needs compiling. You can't just compile it on any
+machine (your local machine) and have it work on any other machine
+(the machine running the web server).
 
-The other program is to be run on the web server itself, and if you
-can't compile it on the web server, you need to compile it on a
-compatible platform. If the web server runs on Linux, and your own
-machine runs a newer version of Linux, it may be that the web server
-doesn't have the right C library. Trying to run the program on the
-server may result in an error like this:
+If you can't compile the software on the machine the web server is
+running, try to use a machine with a matching architecture, like Linux
+on amd64. This should work even if the machines have different version
+numbers for standard libraries, if you compile the software as static
+programs (see below: Creating the server).
 
-```
-./index: /lib/x86_64-linux-gnu/libc.so.6: version `GLIBC_2.28' not found (required by ./index)
-```
-
-One solution, if you can't compile the software on the web server, is
-to use [Docker](https://www.docker.com/). Create an image in Docker
-which emulates the same environment as the web server, and build the
-software inside that image.
+If the above is not an option, for instance you have a Windows
+computer and the web server is running on Linux, then using
+[Docker](https://www.docker.com/) could be a possibility. Create an image
+in Docker which emulates the same environment as the web server, and
+build the software inside that image.
 
 ### Installing the software
 
@@ -50,7 +46,9 @@ cd {{project}}/bin
 ```
 
 Copy `Makefile.cfg.example` to `Makefile.cfg`, and modify it to your
-needs. See the comments in the file.
+needs. See the comments in the file. If you are running on Linux and
+want to build a static program, you probably don't need to change
+anything.
 
 Copy `config.go.example` to `config.go`, and modify it to your needs.
 See the comments in the file. At the moment, you only need to fix the
@@ -95,10 +93,11 @@ What problems do you encounter? Let me know
 
 ----
 
-When running `make`, you may get an error message that starts like this:
+When running `make`, you may get error messages like these:
 
 ```
-headers.go:4:2: cannot find package "github.com/dchest/authcookie" in any of:
+... cannot find package "github.com/dchest/authcookie" ...
+... cannot find package "github.com/mattn/go-sqlite3" ...
 ```
 
 This happens with older versions of Go. To fix this, run these

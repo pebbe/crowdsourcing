@@ -1,17 +1,14 @@
 
+# The Go program.
 # If the program `go` is in your search `PATH` you can simply use `go` as
 # the value. Otherwise, you need to supply the full path.
 #GO = /path/to/go
 GO = go
 
-# If you are building the program on a different machine than running
-# the program, it may not work because of incompatible libraries.
-# In that case, do a static build.
+# Extra options for the Go program.
+# If you are building the program on a different machine than where
+# the program will run, it may not work because of incompatible libraries.
+# In that case, do a static build:
 OPTS = -v -ldflags="-extldflags=-static" -tags sqlite_omit_load_extension
+# Otherwise, you can do a regular build:
 #OPTS = -v
-
-# If at the time of compilation the variable of `HOME` is unknown,
-# for instance when you use the web server to compile the program,
-# you need to set and export the `HOME` variable, so Go knows
-# where to create its 'pkg' and '.cache' directories.
-#export HOME=/tmp/me
