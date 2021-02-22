@@ -39,6 +39,20 @@ and `size`. All field are of type `TEXT` in SQLite, except `size`
 which is of type `INTEGER`. Change those fields, but don't change any
 of the other fields.
 
+You can user more data types than just TEXT and INTEGER
+
+|Go        | SQLite           |
+|----------|-------------------|
+|nil       | NULL              |
+|int       | INTEGER           |
+|int64     | INTEGER           |
+|float64   | FLOAT             |
+|bool      | INTEGER           |
+|[]byte    | BLOB              |
+|string    | TEXT              |
+|time.Time | TIMESTAMP/DATETIME|
+
+
 When you're done, run the command `make` on the command line. This
 creates the program `makedb` and creates the SQLite database.
 
