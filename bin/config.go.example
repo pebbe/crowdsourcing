@@ -25,7 +25,7 @@ const (
 	// URL of the application, including trailing slash
 	cBaseUrl = "https://my.domain/my/crowdsourcing/"
 
-	// For sending mail: name and mail address of sender
+	// For sending mail to the participant: name and mail address of sender
 	cMailName = "Crowdsourcing Demo"
 	cMailFrom = "me@my.domain"
 
