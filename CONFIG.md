@@ -39,7 +39,7 @@ and `size`. All field are of type `TEXT` in SQLite, except `size`
 which is of type `INTEGER`. Change those fields, but don't change any
 of the other fields.
 
-You can user more data types than just TEXT and INTEGER
+You can use more data types than just TEXT and INTEGER
 
 |Go        | SQLite           |
 |----------|-------------------|
