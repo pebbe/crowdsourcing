@@ -8,7 +8,7 @@ There are three things to consider:
 
  1. What data do I need to present a page of the questionnaire to the
     participant? This is the *question data*.
- 2. What data do I get as part of the answer from the participant?
+ 2. What data do I get as parts of the answer from the participant?
     This is the *answer data*.
  3. How do I present a page of the questionnaire?
 
